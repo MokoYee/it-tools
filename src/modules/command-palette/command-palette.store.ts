@@ -6,8 +6,6 @@ import { useFuzzySearch } from '@/composable/fuzzySearch';
 import { useStyleStore } from '@/stores/style.store';
 
 import SunIcon from '~icons/mdi/white-balance-sunny';
-import GithubIcon from '~icons/mdi/github';
-import BugIcon from '~icons/mdi/bug-outline';
 import DiceIcon from '~icons/mdi/dice-5';
 import InfoIcon from '~icons/mdi/information-outline';
 
@@ -21,53 +19,37 @@ export const useCommandPaletteStore = defineStore('command-palette', () => {
     ...tool,
     to: tool.path,
     toolCategory: tool.category,
-    category: 'Tools',
+    category: '工具',
   }));
 
   const searchOptions: PaletteOption[] = [
     ...toolsOptions,
     {
-      name: 'Random tool',
-      description: 'Get a random tool from the list.',
+      name: '随机工具',
+      description: '从列表中随机打开一个工具。',
       action: () => {
         const { path } = _.sample(toolStore.tools)!;
         router.push(path);
       },
       icon: DiceIcon,
-      category: 'Tools',
-      keywords: ['random', 'tool', 'pick', 'choose', 'select'],
+      category: '工具',
+      keywords: ['随机', '工具', 'random', 'tool'],
       closeOnSelect: true,
     },
     {
-      name: 'Toggle dark mode',
-      description: 'Toggle dark mode on or off.',
+      name: '切换深色模式',
+      description: '切换深色或浅色显示模式。',
       action: () => styleStore.toggleDark(),
       icon: SunIcon,
-      category: 'Actions',
-      keywords: ['dark', 'theme', 'toggle', 'mode', 'light', 'system'],
+      category: '操作',
+      keywords: ['深色', '浅色', '主题', 'dark', 'theme'],
     },
     {
-      name: 'Github repository',
-      href: 'https://github.com/CorentinTh/it-tools',
-      category: 'External',
-      description: 'View the source code of it-tools on Github.',
-      keywords: ['github', 'repo', 'repository', 'source', 'code'],
-      icon: GithubIcon,
-    },
-    {
-      name: 'Report a bug or an issue',
-      description: 'Report a bug or an issue to help improve it-tools.',
-      href: 'https://github.com/CorentinTh/it-tools/issues/new/choose',
-      category: 'Actions',
-      keywords: ['report', 'issue', 'bug', 'problem', 'error'],
-      icon: BugIcon,
-    },
-    {
-      name: 'About',
-      description: 'Learn more about IT-Tools.',
+      name: '关于',
+      description: '了解 IT-Tools。',
       to: '/about',
-      category: 'Pages',
-      keywords: ['about', 'learn', 'more', 'info', 'information'],
+      category: '页面',
+      keywords: ['关于', '信息', 'about', 'info'],
       icon: InfoIcon,
     },
   ];

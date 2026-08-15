@@ -58,10 +58,10 @@ export default defineConfig({
       strategies: 'generateSW',
       manifest: {
         name: 'IT Tools',
-        description: 'Aggregated set of useful tools for developers.',
+        description: '面向开发人员和 IT 从业者的在线工具箱。',
         display: 'standalone',
-        lang: 'fr-FR',
-        start_url: `${baseUrl}?utm_source=pwa&utm_medium=pwa`,
+        lang: 'zh-CN',
+        start_url: baseUrl,
         orientation: 'any',
         theme_color: '#18a058',
         background_color: '#f1f5f9',
