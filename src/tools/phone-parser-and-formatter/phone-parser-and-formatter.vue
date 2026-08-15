@@ -1,25 +1,22 @@
 <script setup lang="ts">
 import { getCountries, getCountryCallingCode, parsePhoneNumber } from 'libphonenumber-js/max';
 import lookup from 'country-code-lookup';
-import {
-  formatTypeToHumanReadable,
-  getDefaultCountryCode,
-  getFullCountryName,
-} from './phone-parser-and-formatter.models';
+import { getDefaultCountryCode } from './phone-parser-and-formatter.models';
 import { withDefaultOnError } from '@/utils/defaults';
-import { booleanToHumanReadable } from '@/utils/boolean';
 import { useValidation } from '@/composable/validation';
 
 const rawPhone = ref('');
 const defaultCountryCode = ref(getDefaultCountryCode());
-const validation = useValidation({
+const { locale, t } = useI18n();
+const regionNames = computed(() => new Intl.DisplayNames([locale.value], { type: 'region' }));
+const validation = useValidation<string>({
   source: rawPhone,
-  rules: [
+  rules: computed(() => [
     {
       validator: value => value === '' || /^[0-9 +\-()]+$/.test(value),
-      message: 'Invalid phone number',
+      message: t('toolContent.phone.invalid'),
     },
-  ],
+  ]),
 });
 
 const parsedDetails = computed(() => {
@@ -35,35 +32,35 @@ const parsedDetails = computed(() => {
 
   return [
     {
-      label: 'Country',
+      label: t('toolContent.phone.countryCode'),
       value: parsed.country,
     },
     {
-      label: 'Country',
-      value: getFullCountryName(parsed.country),
+      label: t('toolContent.phone.country'),
+      value: parsed.country ? regionNames.value.of(parsed.country) : undefined,
     },
     {
-      label: 'Country calling code',
+      label: t('toolContent.phone.callingCode'),
       value: parsed.countryCallingCode,
     },
     {
-      label: 'Is valid?',
-      value: booleanToHumanReadable(parsed.isValid()),
+      label: t('toolContent.phone.isValid'),
+      value: parsed.isValid() ? t('toolContent.phone.yes') : t('toolContent.phone.no'),
     },
     {
-      label: 'Is possible?',
-      value: booleanToHumanReadable(parsed.isPossible()),
+      label: t('toolContent.phone.isPossible'),
+      value: parsed.isPossible() ? t('toolContent.phone.yes') : t('toolContent.phone.no'),
     },
     {
-      label: 'Type',
-      value: formatTypeToHumanReadable(parsed.getType()),
+      label: t('toolContent.phone.type'),
+      value: parsed.getType() ? t(`toolContent.phone.types.${parsed.getType()}`) : undefined,
     },
     {
-      label: 'International format',
+      label: t('toolContent.phone.international'),
       value: parsed.formatInternational(),
     },
     {
-      label: 'National format',
+      label: t('toolContent.phone.national'),
       value: parsed.formatNational(),
     },
     {
@@ -77,20 +74,20 @@ const parsedDetails = computed(() => {
   ];
 });
 
-const countriesOptions = getCountries().map(code => ({
-  label: `${lookup.byIso(code)?.country || code} (+${getCountryCallingCode(code)})`,
+const countriesOptions = computed(() => getCountries().map(code => ({
+  label: `${regionNames.value.of(code) || lookup.byIso(code)?.country || code} (+${getCountryCallingCode(code)})`,
   value: code,
-}));
+})));
 </script>
 
 <template>
   <div>
-    <c-select v-model:value="defaultCountryCode" label="Default country code:" :options="countriesOptions" searchable mb-5 />
+    <c-select v-model:value="defaultCountryCode" :label="$t('toolContent.phone.defaultCountry')" :options="countriesOptions" searchable mb-5 />
 
     <c-input-text
       v-model:value="rawPhone"
-      placeholder="Enter a phone number"
-      label="Phone number:"
+      :placeholder="$t('toolContent.phone.placeholder')"
+      :label="$t('toolContent.phone.inputLabel')"
       :validation="validation"
       mb-5
     />
@@ -104,7 +101,7 @@ const countriesOptions = getCountries().map(code => ({
           <td>
             <span-copyable v-if="value" :value="value" />
             <span v-else op-70>
-              Unknown
+              {{ $t('toolContent.phone.unknown') }}
             </span>
           </td>
         </tr>

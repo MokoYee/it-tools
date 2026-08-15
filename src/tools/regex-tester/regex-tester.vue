@@ -15,19 +15,20 @@ const dotAll = ref(true);
 const unicode = ref(true);
 const unicodeSets = ref(false);
 const visualizerSVG = ref<ShadowRootExpose>();
+const { t } = useI18n();
 
-const regexValidation = useValidation({
+const regexValidation = useValidation<string>({
   source: regex,
-  rules: [
+  rules: computed(() => [
     {
-      message: 'Invalid regex: {0}',
+      message: t('toolContent.regex.invalid'),
       validator: value => new RegExp(value),
       getErrorMessage: (value) => {
         const _ = new RegExp(value);
         return '';
       },
     },
-  ],
+  ]),
 });
 const results = computed(() => {
   let flags = 'd';
@@ -95,33 +96,33 @@ watchEffect(
     <c-card title="Regex" mb-1>
       <c-input-text
         v-model:value="regex"
-        label="Regex to test:"
-        placeholder="Put the regex to test"
+        :label="$t('toolContent.regex.inputLabel')"
+        :placeholder="$t('toolContent.regex.placeholder')"
         multiline
         rows="3"
         :validation="regexValidation"
       />
       <router-link target="_blank" to="/regex-memo" mb-1 mt-1>
-        See Regular Expression Cheatsheet
+        {{ $t('toolContent.regex.cheatsheet') }}
       </router-link>
       <n-space>
         <n-checkbox v-model:checked="global">
-          <span title="Global search">Global search. (<code>g</code>)</span>
+          <span :title="$t('toolContent.regex.global')">{{ $t('toolContent.regex.global') }}（<code>g</code>）</span>
         </n-checkbox>
         <n-checkbox v-model:checked="ignoreCase">
-          <span title="Case-insensitive search">Case-insensitive search. (<code>i</code>)</span>
+          <span :title="$t('toolContent.regex.ignoreCase')">{{ $t('toolContent.regex.ignoreCase') }}（<code>i</code>）</span>
         </n-checkbox>
         <n-checkbox v-model:checked="multiline">
-          <span title="Allows ^ and $ to match next to newline characters.">Multiline(<code>m</code>)</span>
+          <span :title="$t('toolContent.regex.multilineHelp')">{{ $t('toolContent.regex.multiline') }}（<code>m</code>）</span>
         </n-checkbox>
         <n-checkbox v-model:checked="dotAll">
-          <span title="Allows . to match newline characters.">Singleline(<code>s</code>)</span>
+          <span :title="$t('toolContent.regex.singlelineHelp')">{{ $t('toolContent.regex.singleline') }}（<code>s</code>）</span>
         </n-checkbox>
         <n-checkbox v-model:checked="unicode">
-          <span title="Unicode; treat a pattern as a sequence of Unicode code points.">Unicode(<code>u</code>)</span>
+          <span :title="$t('toolContent.regex.unicodeHelp')">Unicode（<code>u</code>）</span>
         </n-checkbox>
         <n-checkbox v-model:checked="unicodeSets">
-          <span title="An upgrade to the u mode with more Unicode features.">Unicode Sets (<code>v</code>)</span>
+          <span :title="$t('toolContent.regex.unicodeSetsHelp')">Unicode Sets（<code>v</code>）</span>
         </n-checkbox>
       </n-space>
 
@@ -129,28 +130,28 @@ watchEffect(
 
       <c-input-text
         v-model:value="text"
-        label="Text to match:"
-        placeholder="Put the text to match"
+        :label="$t('toolContent.regex.textLabel')"
+        :placeholder="$t('toolContent.regex.textPlaceholder')"
         multiline
         rows="5"
       />
     </c-card>
 
-    <c-card title="Matches" mb-1 mt-3>
+    <c-card :title="$t('toolContent.regex.matches')" mb-1 mt-3>
       <n-table v-if="results?.length > 0">
         <thead>
           <tr>
             <th scope="col">
-              Index in text
+              {{ $t('toolContent.regex.index') }}
             </th>
             <th scope="col">
-              Value
+              {{ $t('toolContent.regex.value') }}
             </th>
             <th scope="col">
-              Captures
+              {{ $t('toolContent.regex.captures') }}
             </th>
             <th scope="col">
-              Groups
+              {{ $t('toolContent.regex.groups') }}
             </th>
           </tr>
         </thead>
@@ -176,15 +177,15 @@ watchEffect(
         </tbody>
       </n-table>
       <c-alert v-else>
-        No match
+        {{ $t('toolContent.regex.noMatch') }}
       </c-alert>
     </c-card>
 
-    <c-card title="Sample matching text" mt-3>
+    <c-card :title="$t('toolContent.regex.sample')" mt-3>
       <pre style="white-space: pre-wrap; word-break: break-all;">{{ sample }}</pre>
     </c-card>
 
-    <c-card title="Regex Diagram" style="overflow-x: scroll;" mt-3>
+    <c-card :title="$t('toolContent.regex.diagram')" style="overflow-x: scroll;" mt-3>
       <shadow-root ref="visualizerSVG">
 &#xa0;
       </shadow-root>

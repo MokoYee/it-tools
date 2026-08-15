@@ -5,21 +5,22 @@ import { withDefaultOnError } from '@/utils/defaults';
 
 const defaultValue = '{\n\t"hello": [\n\t\t"world"\n\t]\n}';
 const transformer = (value: string) => withDefaultOnError(() => JSON.stringify(JSON5.parse(value), null, 0), '');
+const { t } = useI18n();
 
-const rules: UseValidationRule<string>[] = [
+const rules = computed<UseValidationRule<string>[]>(() => [
   {
     validator: (v: string) => v === '' || JSON5.parse(v),
-    message: 'Provided JSON is not valid.',
+    message: t('common.invalidJson'),
   },
-];
+]);
 </script>
 
 <template>
   <format-transformer
-    input-label="Your raw JSON"
+    :input-label="$t('common.rawJson')"
     :input-default="defaultValue"
-    input-placeholder="Paste your raw JSON here..."
-    output-label="Minified version of your JSON"
+    :input-placeholder="$t('common.pasteRawJson')"
+    :output-label="$t('common.minifiedJson')"
     output-language="json"
     :input-validation-rules="rules"
     :transformer="transformer"

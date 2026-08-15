@@ -1,32 +1,47 @@
-import type { Ref } from 'vue';
+import { type MaybeRefOrGetter, type Ref, computed, toValue } from 'vue';
 import { useValidation } from '@/composable/validation';
 
-const macAddressValidationRules = [
-  {
-    message: 'Invalid MAC address',
-    validator: (value: string) => value.trim().match(/^([0-9A-Fa-f]{2}[:-]){2,5}([0-9A-Fa-f]{2})$/),
-  },
-];
+function createMacAddressValidationRules(message = 'Invalid MAC address') {
+  return [
+    {
+      message,
+      validator: (value: string) => value.trim().match(/^([0-9A-Fa-f]{2}[:-]){2,5}([0-9A-Fa-f]{2})$/),
+    },
+  ];
+}
 
-function macAddressValidation(value: Ref) {
-  return useValidation({
+const macAddressValidationRules = createMacAddressValidationRules();
+
+function macAddressValidation(value: Ref<string>, message: MaybeRefOrGetter<string> = 'Invalid MAC address') {
+  return useValidation<string>({
     source: value,
-    rules: macAddressValidationRules,
+    rules: computed(() => createMacAddressValidationRules(toValue(message))),
   });
 }
 
-const partialMacAddressValidationRules = [
-  {
-    message: 'Invalid partial MAC address',
-    validator: (value: string) => value.trim().match(/^([0-9a-f]{2}[:\-. ]){0,5}([0-9a-f]{0,2})$/i),
-  },
-];
+function createPartialMacAddressValidationRules(message = 'Invalid partial MAC address') {
+  return [
+    {
+      message,
+      validator: (value: string) => value.trim().match(/^([0-9a-f]{2}[:\-. ]){0,5}([0-9a-f]{0,2})$/i),
+    },
+  ];
+}
 
-function usePartialMacAddressValidation(value: Ref) {
-  return useValidation({
+const partialMacAddressValidationRules = createPartialMacAddressValidationRules();
+
+function usePartialMacAddressValidation(value: Ref<string>, message: MaybeRefOrGetter<string> = 'Invalid partial MAC address') {
+  return useValidation<string>({
     source: value,
-    rules: partialMacAddressValidationRules,
+    rules: computed(() => createPartialMacAddressValidationRules(toValue(message))),
   });
 }
 
-export { macAddressValidation, macAddressValidationRules, usePartialMacAddressValidation, partialMacAddressValidationRules };
+export {
+  createMacAddressValidationRules,
+  createPartialMacAddressValidationRules,
+  macAddressValidation,
+  macAddressValidationRules,
+  partialMacAddressValidationRules,
+  usePartialMacAddressValidation,
+};

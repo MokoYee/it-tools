@@ -4,32 +4,33 @@ import { isNotThrowing } from '@/utils/boolean';
 import { withDefaultOnError } from '@/utils/defaults';
 
 const urlToParse = ref('https://me:pwd@example.com:3000/url-parser?key1=value&key2=value2#the-hash');
+const { t } = useI18n();
 
 const urlParsed = computed(() => withDefaultOnError(() => new URL(urlToParse.value), undefined));
-const urlValidationRules = [
+const urlValidationRules = computed(() => [
   {
     validator: (value: string) => isNotThrowing(() => new URL(value)),
-    message: 'Invalid url',
+    message: t('toolContent.urlParser.invalid'),
   },
-];
+]);
 
-const properties: { title: string; key: keyof URL }[] = [
-  { title: 'Protocol', key: 'protocol' },
-  { title: 'Username', key: 'username' },
-  { title: 'Password', key: 'password' },
-  { title: 'Hostname', key: 'hostname' },
-  { title: 'Port', key: 'port' },
-  { title: 'Path', key: 'pathname' },
-  { title: 'Params', key: 'search' },
-];
+const properties = computed<{ title: string; key: keyof URL }[]>(() => [
+  { title: t('toolContent.urlParser.protocol'), key: 'protocol' },
+  { title: t('toolContent.urlParser.username'), key: 'username' },
+  { title: t('toolContent.urlParser.password'), key: 'password' },
+  { title: t('toolContent.urlParser.hostname'), key: 'hostname' },
+  { title: t('toolContent.urlParser.port'), key: 'port' },
+  { title: t('toolContent.urlParser.path'), key: 'pathname' },
+  { title: t('toolContent.urlParser.params'), key: 'search' },
+]);
 </script>
 
 <template>
   <c-card>
     <c-input-text
       v-model:value="urlToParse"
-      label="Your url to parse:"
-      placeholder="Your url to parse..."
+      :label="$t('toolContent.urlParser.inputLabel')"
+      :placeholder="$t('toolContent.urlParser.placeholder')"
       raw-text
       :validation-rules="urlValidationRules"
     />

@@ -2,8 +2,10 @@
 import _ from 'lodash';
 import type { HeaderConfiguration } from './c-table.types';
 
-const props = withDefaults(defineProps<{ data?: Record<string, unknown>[]; headers?: HeaderConfiguration ; hideHeaders?: boolean; description?: string }>(), { data: () => [], headers: undefined, hideHeaders: false, description: 'Data table' });
-const { data, headers: rawHeaders, hideHeaders } = toRefs(props);
+const props = withDefaults(defineProps<{ data?: Record<string, unknown>[]; headers?: HeaderConfiguration ; hideHeaders?: boolean; description?: string }>(), { data: () => [], headers: undefined, hideHeaders: false, description: '' });
+const { data, headers: rawHeaders, hideHeaders, description } = toRefs(props);
+const { t } = useI18n();
+const ariaDescription = computed(() => description.value || t('common.dataTable'));
 
 const headers = computed(() => {
   if (rawHeaders.value) {
@@ -38,8 +40,8 @@ const headers = computed(() => {
 
 <template>
   <div class="relative overflow-x-auto rounded">
-    <table class="w-full border-collapse text-left text-sm text-gray-500 dark:text-gray-400" role="table" :aria-label="description">
-      <thead v-if="!hideHeaders" class="bg-#ffffff uppercase text-gray-700 dark:bg-#333333 dark:text-gray-400" border-b="1px solid dark:transparent #efeff5">
+    <table class="w-full border-collapse text-left text-sm text-gray-500 dark:text-gray-400" role="table" :aria-label="ariaDescription">
+      <thead v-if="!hideHeaders" class="bg-#ffffff text-gray-700 uppercase dark:bg-#333333 dark:text-gray-400" border-b="1px solid dark:transparent #efeff5">
         <tr>
           <th v-for="header in headers" :key="header.key" scope="col" class="px-6 py-3 text-xs">
             {{ header.label }}

@@ -3,12 +3,13 @@ import { decodeSafeLinksURL } from './safelink-decoder.service';
 import TextareaCopyable from '@/components/TextareaCopyable.vue';
 
 const inputSafeLinkUrl = ref('');
+const { t } = useI18n();
 const outputDecodedUrl = computed(() => {
   try {
-    return decodeSafeLinksURL(inputSafeLinkUrl.value);
+    return decodeSafeLinksURL(inputSafeLinkUrl.value) ?? '';
   }
   catch (e: any) {
-    return e.toString();
+    return t('toolContent.safelink.invalid');
   }
 });
 </script>
@@ -18,14 +19,14 @@ const outputDecodedUrl = computed(() => {
     <c-input-text
       v-model:value="inputSafeLinkUrl"
       raw-text
-      placeholder="Your input Outlook SafeLink Url..."
+      :placeholder="$t('toolContent.safelink.placeholder')"
       autofocus
-      label="Your input Outlook SafeLink Url:"
+      :label="$t('toolContent.safelink.inputLabel')"
     />
 
     <n-divider />
 
-    <n-form-item label="Output decoded URL:">
+    <n-form-item :label="$t('toolContent.safelink.outputLabel')">
       <TextareaCopyable :value="outputDecodedUrl" :word-wrap="true" />
     </n-form-item>
   </div>

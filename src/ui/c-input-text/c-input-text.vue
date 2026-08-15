@@ -3,6 +3,7 @@ import { useAppTheme } from '../theme/themes';
 import { useTheme } from './c-input-text.theme';
 import { generateRandomId } from '@/utils/random';
 import { type UseValidationRule, useValidation } from '@/composable/validation';
+import { translate } from '@/plugins/i18n.plugin';
 
 const props = withDefaults(
   defineProps<{
@@ -35,7 +36,7 @@ const props = withDefaults(
   {
     value: '',
     id: generateRandomId,
-    placeholder: 'Input text',
+    placeholder: undefined,
     label: undefined,
     readonly: false,
     disabled: false,
@@ -76,6 +77,7 @@ const validation
 
 const theme = useTheme();
 const appTheme = useAppTheme();
+const effectivePlaceholder = computed(() => placeholder.value ?? translate('common.inputText'));
 
 const textareaRef = ref<HTMLTextAreaElement>();
 const inputRef = ref<HTMLInputElement>();
@@ -162,7 +164,7 @@ defineExpose({
           :class="{
             'leading-5 !font-mono': monospace,
           }"
-          :placeholder="placeholder"
+          :placeholder="effectivePlaceholder"
           :readonly="readonly"
           :disabled="disabled"
           :data-test-id="testId"
@@ -184,7 +186,7 @@ defineExpose({
             'leading-5 !font-mono': monospace,
           }"
           size="1"
-          :placeholder="placeholder"
+          :placeholder="effectivePlaceholder"
           :readonly="readonly"
           :disabled="disabled"
           :data-test-id="testId"

@@ -22,6 +22,14 @@ type Encoding = keyof typeof enc | 'Bin';
 const algoNames = Object.keys(algos) as AlgoNames[];
 const encoding = useQueryParam<Encoding>({ defaultValue: 'Hex', name: 'encoding' });
 const clearText = ref('');
+const { t } = useI18n();
+
+const encodingOptions = computed(() => [
+  { label: t('toolContent.hashText.binary'), value: 'Bin' },
+  { label: t('toolContent.hashText.hexadecimal'), value: 'Hex' },
+  { label: 'Base64 (base 64)', value: 'Base64' },
+  { label: t('toolContent.hashText.base64Url'), value: 'Base64url' },
+]);
 
 function formatWithEncoding(words: lib.WordArray, encoding: Encoding) {
   if (encoding === 'Bin') {
@@ -37,32 +45,15 @@ const hashText = (algo: AlgoNames, value: string) => formatWithEncoding(algos[al
 <template>
   <div>
     <c-card>
-      <c-input-text v-model:value="clearText" multiline raw-text placeholder="Your string to hash..." rows="3" autosize autofocus label="Your text to hash:" />
+      <c-input-text v-model:value="clearText" multiline raw-text :placeholder="$t('toolContent.hashText.placeholder')" rows="3" autosize autofocus :label="$t('toolContent.hashText.inputLabel')" />
 
       <n-divider />
 
       <c-select
         v-model:value="encoding"
         mb-4
-        label="Digest encoding"
-        :options="[
-          {
-            label: 'Binary (base 2)',
-            value: 'Bin',
-          },
-          {
-            label: 'Hexadecimal (base 16)',
-            value: 'Hex',
-          },
-          {
-            label: 'Base64 (base 64)',
-            value: 'Base64',
-          },
-          {
-            label: 'Base64url (base 64 with url safe chars)',
-            value: 'Base64url',
-          },
-        ]"
+        :label="$t('toolContent.hashText.encoding')"
+        :options="encodingOptions"
       />
 
       <div v-for="algo in algoNames" :key="algo" style="margin: 5px 0">

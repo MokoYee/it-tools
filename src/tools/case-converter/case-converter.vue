@@ -93,8 +93,8 @@ const inputLabelAlignmentConfig = {
   <c-card>
     <c-input-text
       v-model:value="input"
-      label="Your string:"
-      placeholder="Your string..."
+      :label="$t('toolContent.caseConverter.inputLabel')"
+      :placeholder="$t('toolContent.caseConverter.placeholder')"
       raw-text
       v-bind="inputLabelAlignmentConfig"
     />

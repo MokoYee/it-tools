@@ -7,24 +7,25 @@ import { isNotThrowing } from '@/utils/boolean';
 
 const rawLeftJson = ref('');
 const rawRightJson = ref('');
+const { t } = useI18n();
 
 const leftJson = computed(() => withDefaultOnError(() => JSON5.parse(rawLeftJson.value), undefined));
 const rightJson = computed(() => withDefaultOnError(() => JSON5.parse(rawRightJson.value), undefined));
 
-const jsonValidationRules = [
+const jsonValidationRules = computed(() => [
   {
     validator: (value: string) => value === '' || isNotThrowing(() => JSON5.parse(value)),
-    message: 'Invalid JSON format',
+    message: t('common.invalidJson'),
   },
-];
+]);
 </script>
 
 <template>
   <c-input-text
     v-model:value="rawLeftJson"
     :validation-rules="jsonValidationRules"
-    label="Your first JSON"
-    placeholder="Paste your first JSON here..."
+    :label="$t('toolContent.jsonDiff.first')"
+    :placeholder="$t('toolContent.jsonDiff.firstPlaceholder')"
     rows="20"
     multiline
     test-id="leftJson"
@@ -35,8 +36,8 @@ const jsonValidationRules = [
   <c-input-text
     v-model:value="rawRightJson"
     :validation-rules="jsonValidationRules"
-    label="Your JSON to compare"
-    placeholder="Paste your JSON to compare here..."
+    :label="$t('toolContent.jsonDiff.second')"
+    :placeholder="$t('toolContent.jsonDiff.secondPlaceholder')"
     rows="20"
     multiline
     test-id="rightJson"

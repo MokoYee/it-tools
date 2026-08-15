@@ -11,26 +11,39 @@ const rawJwt = ref(
 const decodedJWT = computed(() =>
   withDefaultOnError(() => decodeJwt({ jwt: rawJwt.value }), { header: [], payload: [] }),
 );
+const { locale, t } = useI18n();
 
-const sections = [
-  { key: 'header', title: 'Header' },
-  { key: 'payload', title: 'Payload' },
-] as const;
+const sections = computed(() => [
+  { key: 'header' as const, title: t('toolContent.jwt.header') },
+  { key: 'payload' as const, title: t('toolContent.jwt.payload') },
+]);
 
-const validation = useValidation({
+const validation = useValidation<string>({
   source: rawJwt,
-  rules: [
+  rules: computed(() => [
     {
       validator: value => value.length > 0 && isNotThrowing(() => decodeJwt({ jwt: rawJwt.value })),
-      message: 'Invalid JWT',
+      message: t('toolContent.jwt.invalid'),
     },
-  ],
+  ]),
 });
+
+function getClaimDescription(claim: string, fallback: string | undefined) {
+  return locale.value === 'zh' && fallback ? t(`toolContent.jwt.claims.${claim}`) : fallback;
+}
+
+function getFriendlyValue(claim: string, value: string, fallback: string | undefined) {
+  if (locale.value === 'zh' && claim === 'alg' && fallback) {
+    return t(`toolContent.jwt.algorithms.${value}`);
+  }
+
+  return fallback;
+}
 </script>
 
 <template>
   <c-card>
-    <c-input-text v-model:value="rawJwt" label="JWT to decode" :validation="validation" placeholder="Put your token here..." rows="5" multiline raw-text autofocus mb-3 />
+    <c-input-text v-model:value="rawJwt" :label="$t('toolContent.jwt.inputLabel')" :validation="validation" :placeholder="$t('toolContent.jwt.placeholder')" rows="5" multiline raw-text autofocus mb-3 />
 
     <n-table v-if="validation.isValid">
       <tbody>
@@ -44,13 +57,13 @@ const validation = useValidation({
                 {{ claim }}
               </span>
               <span v-if="claimDescription" ml-2 op-70>
-                ({{ claimDescription }})
+                ({{ getClaimDescription(claim, claimDescription) }})
               </span>
             </td>
             <td style="word-wrap: break-word;word-break: break-all;">
               <span>{{ value }}</span>
               <span v-if="friendlyValue" ml-2 op-70>
-                ({{ friendlyValue }})
+                ({{ getFriendlyValue(claim, value, friendlyValue) }})
               </span>
             </td>
           </tr>

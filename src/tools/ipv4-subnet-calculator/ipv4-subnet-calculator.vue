@@ -8,70 +8,71 @@ import { isNotThrowing } from '@/utils/boolean';
 import SpanCopyable from '@/components/SpanCopyable.vue';
 
 const ip = useStorage('ipv4-subnet-calculator:ip', '192.168.0.1/24');
+const { t } = useI18n();
 
 const getNetworkInfo = (address: string) => new Netmask(address.trim());
 
 const networkInfo = computed(() => withDefaultOnError(() => getNetworkInfo(ip.value), undefined));
 
-const ipValidationRules = [
+const ipValidationRules = computed(() => [
   {
-    message: 'We cannot parse this address, check the format',
+    message: t('toolContent.ipv4Subnet.invalid'),
     validator: (value: string) => isNotThrowing(() => getNetworkInfo(value.trim())),
   },
-];
+]);
 
-const sections: {
+const sections = computed<{
   label: string
   getValue: (blocks: Netmask) => string | undefined
   undefinedFallback?: string
-}[] = [
-  {
-    label: 'Netmask',
-    getValue: block => block.toString(),
-  },
-  {
-    label: 'Network address',
-    getValue: ({ base }) => base,
-  },
-  {
-    label: 'Network mask',
-    getValue: ({ mask }) => mask,
-  },
-  {
-    label: 'Network mask in binary',
-    getValue: ({ bitmask }) => ('1'.repeat(bitmask) + '0'.repeat(32 - bitmask)).match(/.{8}/g)?.join('.') ?? '',
-  },
-  {
-    label: 'CIDR notation',
-    getValue: ({ bitmask }) => `/${bitmask}`,
-  },
-  {
-    label: 'Wildcard mask',
-    getValue: ({ hostmask }) => hostmask,
-  },
-  {
-    label: 'Network size',
-    getValue: ({ size }) => String(size),
-  },
-  {
-    label: 'First address',
-    getValue: ({ first }) => first,
-  },
-  {
-    label: 'Last address',
-    getValue: ({ last }) => last,
-  },
-  {
-    label: 'Broadcast address',
-    getValue: ({ broadcast }) => broadcast,
-    undefinedFallback: 'No broadcast address with this mask',
-  },
-  {
-    label: 'IP class',
-    getValue: ({ base: ip }) => getIPClass({ ip }),
-    undefinedFallback: 'Unknown class type',
-  },
-];
+}[]>(() => [
+      {
+        label: t('toolContent.ipv4Subnet.netmask'),
+        getValue: block => block.toString(),
+      },
+      {
+        label: t('toolContent.ipv4Subnet.networkAddress'),
+        getValue: ({ base }) => base,
+      },
+      {
+        label: t('toolContent.ipv4Subnet.networkMask'),
+        getValue: ({ mask }) => mask,
+      },
+      {
+        label: t('toolContent.ipv4Subnet.binaryMask'),
+        getValue: ({ bitmask }) => ('1'.repeat(bitmask) + '0'.repeat(32 - bitmask)).match(/.{8}/g)?.join('.') ?? '',
+      },
+      {
+        label: t('toolContent.ipv4Subnet.cidr'),
+        getValue: ({ bitmask }) => `/${bitmask}`,
+      },
+      {
+        label: t('toolContent.ipv4Subnet.wildcard'),
+        getValue: ({ hostmask }) => hostmask,
+      },
+      {
+        label: t('toolContent.ipv4Subnet.size'),
+        getValue: ({ size }) => String(size),
+      },
+      {
+        label: t('toolContent.ipv4Subnet.first'),
+        getValue: ({ first }) => first,
+      },
+      {
+        label: t('toolContent.ipv4Subnet.last'),
+        getValue: ({ last }) => last,
+      },
+      {
+        label: t('toolContent.ipv4Subnet.broadcast'),
+        getValue: ({ broadcast }) => broadcast,
+        undefinedFallback: t('toolContent.ipv4Subnet.noBroadcast'),
+      },
+      {
+        label: t('toolContent.ipv4Subnet.ipClass'),
+        getValue: ({ base: ip }) => getIPClass({ ip }),
+        undefinedFallback: t('toolContent.ipv4Subnet.unknownClass'),
+      },
+    ]);
 
 function switchToBlock({ count = 1 }: { count?: number }) {
   const next = networkInfo.value?.next(count);
@@ -86,8 +87,8 @@ function switchToBlock({ count = 1 }: { count?: number }) {
   <div>
     <c-input-text
       v-model:value="ip"
-      label="An IPv4 address with or without mask"
-      placeholder="The ipv4 address..."
+      :label="$t('toolContent.ipv4Subnet.inputLabel')"
+      :placeholder="$t('toolContent.ipv4.placeholder')"
       :validation-rules="ipValidationRules"
       mb-4
     />
@@ -112,10 +113,10 @@ function switchToBlock({ count = 1 }: { count?: number }) {
       <div mt-3 flex items-center justify-between>
         <c-button @click="switchToBlock({ count: -1 })">
           <n-icon :component="ArrowLeft" />
-          Previous block
+          {{ $t('toolContent.ipv4Subnet.previous') }}
         </c-button>
         <c-button @click="switchToBlock({ count: 1 })">
-          Next block
+          {{ $t('toolContent.ipv4Subnet.next') }}
           <n-icon :component="ArrowRight" />
         </c-button>
       </div>

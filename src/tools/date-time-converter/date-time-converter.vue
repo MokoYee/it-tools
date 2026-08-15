@@ -30,12 +30,13 @@ import { withDefaultOnError } from '@/utils/defaults';
 import { useValidation } from '@/composable/validation';
 
 const inputDate = ref('');
+const { t } = useI18n();
 
 const toDate: ToDateMapper = date => new Date(date);
 
 const formats: DateFormat[] = [
   {
-    name: 'JS locale date string',
+    name: t('toolContent.dateTime.jsLocale'),
     fromDate: date => date.toString(),
     toDate,
     formatMatcher: () => false,
@@ -65,19 +66,19 @@ const formats: DateFormat[] = [
     formatMatcher: date => isRFC7231DateString(date),
   },
   {
-    name: 'Unix timestamp',
+    name: t('toolContent.dateTime.unixTimestamp'),
     fromDate: date => String(getUnixTime(date)),
     toDate: sec => fromUnixTime(+sec),
     formatMatcher: date => isUnixTimestamp(date),
   },
   {
-    name: 'Timestamp',
+    name: t('toolContent.dateTime.timestamp'),
     fromDate: date => String(getTime(date)),
     toDate: ms => parseJSON(+ms),
     formatMatcher: date => isTimestamp(date),
   },
   {
-    name: 'UTC format',
+    name: t('toolContent.dateTime.utcFormat'),
     fromDate: date => date.toUTCString(),
     toDate,
     formatMatcher: date => isUTCDateString(date),
@@ -89,7 +90,7 @@ const formats: DateFormat[] = [
     formatMatcher: date => isMongoObjectId(date),
   },
   {
-    name: 'Excel date/time',
+    name: t('toolContent.dateTime.excelDateTime'),
     fromDate: date => dateToExcelFormat(date),
     toDate: excelFormatToDate,
     formatMatcher: isExcelFormat,
@@ -121,12 +122,12 @@ function onDateInputChanged(value: string) {
   }
 }
 
-const validation = useValidation({
+const validation = useValidation<string>({
   source: inputDate,
   watch: [formatIndex],
-  rules: [
+  rules: computed(() => [
     {
-      message: 'This date is invalid for this format',
+      message: t('toolContent.dateTime.invalid'),
       validator: value =>
         withDefaultOnError(() => {
           if (value === '') {
@@ -137,7 +138,7 @@ const validation = useValidation({
           return isDate(maybeDate) && isValid(maybeDate);
         }, false),
     },
-  ],
+  ]),
 });
 
 function formatDateUsingFormatter(formatter: (date: Date) => string, date?: Date) {
@@ -155,7 +156,7 @@ function formatDateUsingFormatter(formatter: (date: Date) => string, date?: Date
       <c-input-text
         v-model:value="inputDate"
         autofocus
-        placeholder="Put your date string here..."
+        :placeholder="$t('toolContent.dateTime.placeholder')"
         clearable
         test-id="date-time-converter-input"
         :validation="validation"
@@ -180,7 +181,7 @@ function formatDateUsingFormatter(formatter: (date: Date) => string, date?: Date
       label-position="left"
       label-align="right"
       :value="formatDateUsingFormatter(fromDate, normalizedDate)"
-      placeholder="Invalid date..."
+      :placeholder="$t('toolContent.dateTime.invalidPlaceholder')"
       :test-id="name"
       readonly
       mt-2

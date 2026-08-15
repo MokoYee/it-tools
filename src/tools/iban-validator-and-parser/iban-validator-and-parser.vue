@@ -4,6 +4,17 @@ import { getFriendlyErrors } from './iban-validator-and-parser.service';
 import type { CKeyValueListItems } from '@/ui/c-key-value-list/c-key-value-list.types';
 
 const rawIban = ref('');
+const { t } = useI18n();
+const errorTranslationKeys: Record<string, string> = {
+  'No IBAN provided': 'toolContent.iban.errors.noIban',
+  'No IBAN country': 'toolContent.iban.errors.noCountry',
+  'Wrong BBAN length': 'toolContent.iban.errors.wrongBbanLength',
+  'Wrong BBAN format': 'toolContent.iban.errors.wrongBbanFormat',
+  'Checksum is not a number': 'toolContent.iban.errors.checksumNotNumber',
+  'Wrong IBAN checksum': 'toolContent.iban.errors.wrongIbanChecksum',
+  'Wrong account bank branch checksum': 'toolContent.iban.errors.wrongBranchChecksum',
+  'QR-IBAN not allowed': 'toolContent.iban.errors.qrNotAllowed',
+};
 
 const ibanInfo = computed<CKeyValueListItems>(() => {
   const iban = rawIban.value.toUpperCase().replace(/\s/g, '').replace(/-/g, '');
@@ -14,28 +25,31 @@ const ibanInfo = computed<CKeyValueListItems>(() => {
 
   const { valid: isIbanValid, errorCodes } = validateIBAN(iban);
   const { countryCode, bban } = extractIBAN(iban);
-  const errors = getFriendlyErrors(errorCodes);
+  const errors = getFriendlyErrors(errorCodes).map((message) => {
+    const translationKey = errorTranslationKeys[message];
+    return translationKey ? t(translationKey) : message;
+  });
 
   return [
 
     {
-      label: 'Is IBAN valid ?',
+      label: t('toolContent.iban.isValid'),
       value: isIbanValid,
       showCopyButton: false,
     },
     {
-      label: 'IBAN errors',
+      label: t('toolContent.iban.errorsLabel'),
       value: errors.length === 0 ? undefined : errors,
       hideOnNil: true,
       showCopyButton: false,
     },
     {
-      label: 'Is IBAN a QR-IBAN ?',
+      label: t('toolContent.iban.isQrIban'),
       value: isQRIBAN(iban),
       showCopyButton: false,
     },
     {
-      label: 'Country code',
+      label: t('toolContent.iban.countryCode'),
       value: countryCode,
     },
     {
@@ -43,7 +57,7 @@ const ibanInfo = computed<CKeyValueListItems>(() => {
       value: bban,
     },
     {
-      label: 'IBAN friendly format',
+      label: t('toolContent.iban.friendlyFormat'),
       value: friendlyFormatIBAN(iban),
     },
   ];
@@ -58,13 +72,13 @@ const ibanExamples = [
 
 <template>
   <div>
-    <c-input-text v-model:value="rawIban" placeholder="Enter an IBAN to check for validity..." test-id="iban-input" />
+    <c-input-text v-model:value="rawIban" :placeholder="$t('toolContent.iban.placeholder')" test-id="iban-input" />
 
     <c-card v-if="ibanInfo.length > 0" mt-5>
       <c-key-value-list :items="ibanInfo" data-test-id="iban-info" />
     </c-card>
 
-    <c-card title="Valid IBAN examples" mt-5>
+    <c-card :title="$t('toolContent.iban.examples')" mt-5>
       <div v-for="iban in ibanExamples" :key="iban">
         <c-text-copyable :value="iban" font-mono :displayed-value="friendlyFormatIBAN(iban)" />
       </div>

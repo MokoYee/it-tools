@@ -8,6 +8,7 @@ import { useDownloadFileFromBase64 } from '@/composable/downloadBase64';
 
 const foreground = ref('#000000ff');
 const background = ref('#ffffffff');
+const { t } = useI18n();
 
 const ssid = ref();
 const password = ref();
@@ -33,6 +34,12 @@ const { qrcode, encryption } = useWifiQRCode({
 });
 
 const { download } = useDownloadFileFromBase64({ source: qrcode, filename: 'qr-code.png' });
+const encryptionOptions = computed(() => [
+  { label: t('toolContent.wifiQr.noPassword'), value: 'nopass' },
+  { label: 'WPA/WPA2', value: 'WPA' },
+  { label: 'WEP', value: 'WEP' },
+  { label: 'WPA2-EAP', value: 'WPA2-EAP' },
+]);
 </script>
 
 <template>
@@ -42,29 +49,12 @@ const { download } = useDownloadFileFromBase64({ source: qrcode, filename: 'qr-c
         <c-select
           v-model:value="encryption"
           mb-4
-          label="Encryption method"
+          :label="$t('toolContent.wifiQr.encryption')"
           default-value="WPA"
           label-position="left"
           label-width="130px"
           label-align="right"
-          :options="[
-            {
-              label: 'No password',
-              value: 'nopass',
-            },
-            {
-              label: 'WPA/WPA2',
-              value: 'WPA',
-            },
-            {
-              label: 'WEP',
-              value: 'WEP',
-            },
-            {
-              label: 'WPA2-EAP',
-              value: 'WPA2-EAP',
-            },
-          ]"
+          :options="encryptionOptions"
         />
         <div class="mb-6 flex flex-row items-center gap-2">
           <c-input-text
@@ -75,11 +65,11 @@ const { download } = useDownloadFileFromBase64({ source: qrcode, filename: 'qr-c
             label="SSID:"
             rows="1"
             autosize
-            placeholder="Your WiFi SSID..."
+            :placeholder="$t('toolContent.wifiQr.ssidPlaceholder')"
             mb-6
           />
           <n-checkbox v-model:checked="isHiddenSSID">
-            Hidden SSID
+            {{ $t('toolContent.wifiQr.hiddenSsid') }}
           </n-checkbox>
         </div>
         <c-input-text
@@ -88,17 +78,17 @@ const { download } = useDownloadFileFromBase64({ source: qrcode, filename: 'qr-c
           label-position="left"
           label-width="130px"
           label-align="right"
-          label="Password:"
+          :label="$t('toolContent.wifiQr.password')"
           rows="1"
           autosize
           type="password"
-          placeholder="Your WiFi Password..."
+          :placeholder="$t('toolContent.wifiQr.passwordPlaceholder')"
           mb-6
         />
         <c-select
           v-if="encryption === 'WPA2-EAP'"
           v-model:value="eapMethod"
-          label="EAP method"
+          :label="$t('toolContent.wifiQr.eapMethod')"
           label-position="left"
           label-width="130px"
           label-align="right"
@@ -111,20 +101,20 @@ const { download } = useDownloadFileFromBase64({ source: qrcode, filename: 'qr-c
             label-position="left"
             label-width="130px"
             label-align="right"
-            label="Identity:"
+            :label="$t('toolContent.wifiQr.identity')"
             rows="1"
             autosize
-            placeholder="Your EAP Identity..."
+            :placeholder="$t('toolContent.wifiQr.identityPlaceholder')"
             mb-6
           />
           <n-checkbox v-model:checked="eapAnonymous">
-            Anonymous?
+            {{ $t('toolContent.wifiQr.anonymous') }}
           </n-checkbox>
         </div>
         <c-select
           v-if="encryption === 'WPA2-EAP'"
           v-model:value="eapPhase2Method"
-          label="EAP Phase 2 method"
+          :label="$t('toolContent.wifiQr.phase2Method')"
           label-position="left"
           label-width="130px"
           label-align="right"
@@ -132,10 +122,10 @@ const { download } = useDownloadFileFromBase64({ source: qrcode, filename: 'qr-c
           searchable mb-4
         />
         <n-form label-width="130" label-placement="left">
-          <n-form-item label="Foreground color:">
+          <n-form-item :label="$t('toolContent.qr.foreground')">
             <n-color-picker v-model:value="foreground" :modes="['hex']" />
           </n-form-item>
-          <n-form-item label="Background color:">
+          <n-form-item :label="$t('toolContent.qr.background')">
             <n-color-picker v-model:value="background" :modes="['hex']" />
           </n-form-item>
         </n-form>
@@ -144,7 +134,7 @@ const { download } = useDownloadFileFromBase64({ source: qrcode, filename: 'qr-c
         <div flex flex-col items-center gap-3>
           <img alt="wifi-qrcode" :src="qrcode" width="200">
           <c-button @click="download">
-            Download qr-code
+            {{ $t('toolContent.qr.download') }}
           </c-button>
         </div>
       </div>

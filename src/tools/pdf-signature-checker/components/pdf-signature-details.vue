@@ -3,21 +3,22 @@ import type { SignatureInfo } from '../pdf-signature-checker.types';
 
 const props = defineProps<{ signature: SignatureInfo }>();
 const { signature } = toRefs(props);
+const { locale, t } = useI18n();
 
-const tableHeaders = {
-  validityPeriod: 'Validity period',
-  issuedBy: 'Issued by',
-  issuedTo: 'Issued to',
-  pemCertificate: 'PEM certificate',
-};
+const tableHeaders = computed(() => ({
+  validityPeriod: t('toolContent.pdf.validityPeriod'),
+  issuedBy: t('toolContent.pdf.issuedBy'),
+  issuedTo: t('toolContent.pdf.issuedTo'),
+  pemCertificate: t('toolContent.pdf.pemCertificate'),
+}));
 
 const certs = computed(() => signature.value.meta.certs.map((certificate, index) => ({
   ...certificate,
   validityPeriod: {
-    notBefore: new Date(certificate.validityPeriod.notBefore).toLocaleString(),
-    notAfter: new Date(certificate.validityPeriod.notAfter).toLocaleString(),
+    notBefore: new Date(certificate.validityPeriod.notBefore).toLocaleString(locale.value),
+    notAfter: new Date(certificate.validityPeriod.notAfter).toLocaleString(locale.value),
   },
-  certificateName: `Certificate ${index + 1}`,
+  certificateName: t('toolContent.pdf.certificate', { index: index + 1 }),
 })),
 );
 </script>
@@ -28,10 +29,10 @@ const certs = computed(() => signature.value.meta.certs.map((certificate, index)
       <template #validityPeriod="{ value }">
         <c-key-value-list
           :items="[{
-            label: 'Not before',
+            label: $t('toolContent.pdf.notBefore'),
             value: value.notBefore,
           }, {
-            label: 'Not after',
+            label: $t('toolContent.pdf.notAfter'),
             value: value.notAfter,
           }]"
         />
@@ -40,22 +41,22 @@ const certs = computed(() => signature.value.meta.certs.map((certificate, index)
       <template #issuedBy="{ value }">
         <c-key-value-list
           :items="[{
-            label: 'Common name',
+            label: $t('toolContent.pdf.commonName'),
             value: value.commonName,
           }, {
-            label: 'Organization name',
+            label: $t('toolContent.pdf.organizationName'),
             value: value.organizationName,
           }, {
-            label: 'Country name',
+            label: $t('toolContent.pdf.countryName'),
             value: value.countryName,
           }, {
-            label: 'Locality name',
+            label: $t('toolContent.pdf.localityName'),
             value: value.localityName,
           }, {
-            label: 'Organizational unit name',
+            label: $t('toolContent.pdf.organizationalUnitName'),
             value: value.organizationalUnitName,
           }, {
-            label: 'State or province name',
+            label: $t('toolContent.pdf.stateName'),
             value: value.stateOrProvinceName,
           }]"
         />
@@ -64,29 +65,29 @@ const certs = computed(() => signature.value.meta.certs.map((certificate, index)
       <template #issuedTo="{ value }">
         <c-key-value-list
           :items="[{
-            label: 'Common name',
+            label: $t('toolContent.pdf.commonName'),
             value: value.commonName,
           }, {
-            label: 'Organization name',
+            label: $t('toolContent.pdf.organizationName'),
             value: value.organizationName,
           }, {
-            label: 'Country name',
+            label: $t('toolContent.pdf.countryName'),
             value: value.countryName,
           }, {
-            label: 'Locality name',
+            label: $t('toolContent.pdf.localityName'),
             value: value.localityName,
           }, {
-            label: 'Organizational unit name',
+            label: $t('toolContent.pdf.organizationalUnitName'),
             value: value.organizationalUnitName,
           }, {
-            label: 'State or province name',
+            label: $t('toolContent.pdf.stateName'),
             value: value.stateOrProvinceName,
           }]"
         />
       </template>
 
       <template #pemCertificate="{ value }">
-        <c-modal-value :value="value" label="View PEM cert">
+        <c-modal-value :value="value" :label="$t('toolContent.pdf.viewPem')">
           <template #value>
             <div break-all text-xs>
               {{ value }}

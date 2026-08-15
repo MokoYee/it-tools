@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import cronstrue from 'cronstrue';
+import cronstrue from 'cronstrue/i18n.js';
 import { isValidCron } from 'cron-validator';
 import { useStyleStore } from '@/stores/style.store';
 
@@ -8,6 +8,7 @@ function isCronValid(v: string) {
 }
 
 const styleStore = useStyleStore();
+const { locale, t } = useI18n();
 
 const cron = ref('40 * * * *');
 const cronstrueConfig = reactive({
@@ -17,94 +18,94 @@ const cronstrueConfig = reactive({
   throwExceptionOnParseError: true,
 });
 
-const helpers = [
+const helpers = computed(() => [
   {
     symbol: '*',
-    meaning: 'Any value',
+    meaning: t('toolContent.cron.anyValue'),
     example: '* * * *',
-    equivalent: 'Every minute',
+    equivalent: t('toolContent.cron.everyMinute'),
   },
   {
     symbol: '-',
-    meaning: 'Range of values',
+    meaning: t('toolContent.cron.range'),
     example: '1-10 * * *',
-    equivalent: 'Minutes 1 through 10',
+    equivalent: t('toolContent.cron.minutesRange'),
   },
   {
     symbol: ',',
-    meaning: 'List of values',
+    meaning: t('toolContent.cron.list'),
     example: '1,10 * * *',
-    equivalent: 'At minutes 1 and 10',
+    equivalent: t('toolContent.cron.atMinutes'),
   },
   {
     symbol: '/',
-    meaning: 'Step values',
+    meaning: t('toolContent.cron.step'),
     example: '*/10 * * *',
-    equivalent: 'Every 10 minutes',
+    equivalent: t('toolContent.cron.everyTenMinutes'),
   },
   {
     symbol: '@yearly',
-    meaning: 'Once every year at midnight of 1 January',
+    meaning: t('toolContent.cron.yearly'),
     example: '@yearly',
     equivalent: '0 0 1 1 *',
   },
   {
     symbol: '@annually',
-    meaning: 'Same as @yearly',
+    meaning: t('toolContent.cron.sameAsYearly'),
     example: '@annually',
     equivalent: '0 0 1 1 *',
   },
   {
     symbol: '@monthly',
-    meaning: 'Once a month at midnight on the first day',
+    meaning: t('toolContent.cron.monthly'),
     example: '@monthly',
     equivalent: '0 0 1 * *',
   },
   {
     symbol: '@weekly',
-    meaning: 'Once a week at midnight on Sunday morning',
+    meaning: t('toolContent.cron.weekly'),
     example: '@weekly',
     equivalent: '0 0 * * 0',
   },
   {
     symbol: '@daily',
-    meaning: 'Once a day at midnight',
+    meaning: t('toolContent.cron.daily'),
     example: '@daily',
     equivalent: '0 0 * * *',
   },
   {
     symbol: '@midnight',
-    meaning: 'Same as @daily',
+    meaning: t('toolContent.cron.sameAsDaily'),
     example: '@midnight',
     equivalent: '0 0 * * *',
   },
   {
     symbol: '@hourly',
-    meaning: 'Once an hour at the beginning of the hour',
+    meaning: t('toolContent.cron.hourly'),
     example: '@hourly',
     equivalent: '0 * * * *',
   },
   {
     symbol: '@reboot',
-    meaning: 'Run at startup',
+    meaning: t('toolContent.cron.reboot'),
     example: '',
     equivalent: '',
   },
-];
+]);
 
 const cronString = computed(() => {
   if (isCronValid(cron.value)) {
-    return cronstrue.toString(cron.value, cronstrueConfig);
+    return cronstrue.toString(cron.value, { ...cronstrueConfig, locale: locale.value === 'zh' ? 'zh_CN' : 'en' });
   }
   return ' ';
 });
 
-const cronValidationRules = [
+const cronValidationRules = computed(() => [
   {
     validator: (value: string) => isCronValid(value),
-    message: 'This cron is invalid',
+    message: t('toolContent.cron.invalid'),
   },
-];
+]);
 </script>
 
 <template>
@@ -127,48 +128,49 @@ const cronValidationRules = [
 
     <div flex justify-center>
       <n-form :show-feedback="false" label-width="170" label-placement="left">
-        <n-form-item label="Verbose">
+        <n-form-item :label="$t('toolContent.cron.verbose')">
           <n-switch v-model:value="cronstrueConfig.verbose" />
         </n-form-item>
-        <n-form-item label="Use 24 hour time format">
+        <n-form-item :label="$t('toolContent.cron.use24Hour')">
           <n-switch v-model:value="cronstrueConfig.use24HourTimeFormat" />
         </n-form-item>
-        <n-form-item label="Days start at 0">
+        <n-form-item :label="$t('toolContent.cron.daysStartAtZero')">
           <n-switch v-model:value="cronstrueConfig.dayOfWeekStartIndexZero" />
         </n-form-item>
       </n-form>
     </div>
   </c-card>
   <c-card>
-    <pre>
-┌──────────── [optional] seconds (0 - 59)
-| ┌────────── minute (0 - 59)
-| | ┌──────── hour (0 - 23)
-| | | ┌────── day of month (1 - 31)
-| | | | ┌──── month (1 - 12) OR jan,feb,mar,apr ...
-| | | | | ┌── day of week (0 - 6, sunday=0) OR sun,mon ...
-| | | | | |
-* * * * * * command</pre>
+    <pre>{{ $t('toolContent.cron.diagram') }}</pre>
 
     <div v-if="styleStore.isSmallScreen">
       <c-card v-for="{ symbol, meaning, example, equivalent } in helpers" :key="symbol" mb-3 important:border-none>
         <div>
-          Symbol: <strong>{{ symbol }}</strong>
+          {{ $t('toolContent.cron.symbol') }} <strong>{{ symbol }}</strong>
         </div>
         <div>
-          Meaning: <strong>{{ meaning }}</strong>
+          {{ $t('toolContent.cron.meaning') }} <strong>{{ meaning }}</strong>
         </div>
         <div>
-          Example:
+          {{ $t('toolContent.cron.example') }}
           <strong><code>{{ example }}</code></strong>
         </div>
         <div>
-          Equivalent: <strong>{{ equivalent }}</strong>
+          {{ $t('toolContent.cron.equivalent') }} <strong>{{ equivalent }}</strong>
         </div>
       </c-card>
     </div>
 
-    <c-table v-else :data="helpers" />
+    <c-table
+      v-else
+      :data="helpers"
+      :headers="{
+        symbol: $t('toolContent.cron.symbol'),
+        meaning: $t('toolContent.cron.meaning'),
+        example: $t('toolContent.cron.example'),
+        equivalent: $t('toolContent.cron.equivalent'),
+      }"
+    />
   </c-card>
 </template>
 

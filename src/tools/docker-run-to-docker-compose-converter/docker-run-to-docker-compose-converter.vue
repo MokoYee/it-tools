@@ -32,12 +32,12 @@ const { download } = useDownloadFileFromBase64({ source: dockerComposeBase64, fi
   <div>
     <c-input-text
       v-model:value="dockerRun"
-      label="Your docker run command:"
+      :label="$t('toolContent.docker.inputLabel')"
       style="font-family: monospace"
       multiline
       raw-text
       monospace
-      placeholder="Your docker run command to convert..."
+      :placeholder="$t('toolContent.docker.placeholder')"
       rows="3"
     />
 
@@ -47,12 +47,12 @@ const { download } = useDownloadFileFromBase64({ source: dockerComposeBase64, fi
 
     <div mt-5 flex justify-center>
       <c-button :disabled="dockerCompose === ''" secondary @click="download">
-        Download docker-compose.yml
+        {{ $t('toolContent.docker.download') }}
       </c-button>
     </div>
 
     <div v-if="notComposable.length > 0">
-      <n-alert title="This options are not translatable to docker-compose" type="info" mt-5>
+      <n-alert :title="$t('toolContent.docker.notTranslatable')" type="info" mt-5>
         <ul>
           <li v-for="(message, index) of notComposable" :key="index">
             {{ message }}
@@ -63,7 +63,7 @@ const { download } = useDownloadFileFromBase64({ source: dockerComposeBase64, fi
 
     <div v-if="notImplemented.length > 0">
       <n-alert
-        title="This options are not yet implemented and therefore haven't been translated to docker-compose"
+        :title="$t('toolContent.docker.notImplemented')"
         type="warning"
         mt-5
       >
@@ -76,7 +76,7 @@ const { download } = useDownloadFileFromBase64({ source: dockerComposeBase64, fi
     </div>
 
     <div v-if="errors.length > 0">
-      <n-alert title="The following errors occured" type="error" mt-5>
+      <n-alert :title="$t('toolContent.docker.errors')" type="error" mt-5>
         <ul>
           <li v-for="(message, index) of errors" :key="index">
             {{ message }}

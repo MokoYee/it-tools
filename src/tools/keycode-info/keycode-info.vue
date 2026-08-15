@@ -4,6 +4,7 @@ import { useEventListener } from '@vueuse/core';
 import InputCopyable from '../../components/InputCopyable.vue';
 
 const event = ref<KeyboardEvent>();
+const { t } = useI18n();
 
 useEventListener(document, 'keydown', (e) => {
   event.value = e;
@@ -16,28 +17,28 @@ const fields = computed(() => {
 
   return [
     {
-      label: 'Key :',
+      label: t('toolContent.keycode.key'),
       value: event.value.key,
-      placeholder: 'Key name...',
+      placeholder: t('toolContent.keycode.keyPlaceholder'),
     },
     {
-      label: 'Keycode :',
+      label: t('toolContent.keycode.keycode'),
       value: String(event.value.keyCode),
       placeholder: 'Keycode...',
     },
     {
-      label: 'Code :',
+      label: t('toolContent.keycode.code'),
       value: event.value.code,
       placeholder: 'Code...',
     },
     {
-      label: 'Location :',
+      label: t('toolContent.keycode.location'),
       value: String(event.value.location),
       placeholder: 'Code...',
     },
 
     {
-      label: 'Modifiers :',
+      label: t('toolContent.keycode.modifiers'),
       value: [
         event.value.metaKey && 'Meta',
         event.value.shiftKey && 'Shift',
@@ -46,7 +47,7 @@ const fields = computed(() => {
       ]
         .filter(Boolean)
         .join(' + '),
-      placeholder: 'None',
+      placeholder: t('toolContent.keycode.none'),
     },
   ];
 });
@@ -59,7 +60,7 @@ const fields = computed(() => {
         {{ event.key }}
       </div>
       <span lh-1 op-70>
-        Press the key on your keyboard you want to get info about this key
+        {{ $t('toolContent.keycode.instruction') }}
       </span>
     </c-card>
 

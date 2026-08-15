@@ -20,14 +20,14 @@ const showResults = computed(() => !_.isUndefined(leftJson.value) && !_.isUndefi
 <template>
   <div v-if="showResults">
     <div flex justify-center>
-      <n-form-item label="Only show differences" label-placement="left">
+      <n-form-item :label="$t('toolContent.jsonDiff.onlyDifferences')" label-placement="left">
         <n-switch v-model:value="onlyShowDifferences" />
       </n-form-item>
     </div>
 
     <c-card data-test-id="diff-result">
       <div v-if="jsonAreTheSame" text-center op-70>
-        The provided JSONs are the same
+        {{ $t('toolContent.jsonDiff.same') }}
       </div>
       <DiffRootViewer v-else :diff="result" />
     </c-card>

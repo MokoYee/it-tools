@@ -2,59 +2,60 @@
 import { useWindowSize } from '@vueuse/core';
 
 const { width, height } = useWindowSize();
+const { t } = useI18n();
 
-const sections = [
+const sections = computed(() => [
   {
-    name: 'Screen',
+    name: t('toolContent.device.screen'),
     information: [
       {
-        label: 'Screen size',
+        label: t('toolContent.device.screenSize'),
         value: computed(() => `${window.screen.availWidth} x ${window.screen.availHeight}`),
       },
       {
-        label: 'Orientation',
+        label: t('toolContent.device.orientation'),
         value: computed(() => window.screen.orientation.type),
       },
       {
-        label: 'Orientation angle',
+        label: t('toolContent.device.orientationAngle'),
         value: computed(() => `${window.screen.orientation.angle}°`),
       },
       {
-        label: 'Color depth',
+        label: t('toolContent.device.colorDepth'),
         value: computed(() => `${window.screen.colorDepth} bits`),
       },
       {
-        label: 'Pixel ratio',
+        label: t('toolContent.device.pixelRatio'),
         value: computed(() => `${window.devicePixelRatio} dppx`),
       },
       {
-        label: 'Window size',
+        label: t('toolContent.device.windowSize'),
         value: computed(() => `${width.value} x ${height.value}`),
       },
     ],
   },
   {
-    name: 'Device',
+    name: t('toolContent.device.device'),
     information: [
       {
-        label: 'Browser vendor',
+        label: t('toolContent.device.browserVendor'),
         value: computed(() => navigator.vendor),
       },
       {
-        label: 'Languages',
+        label: t('toolContent.device.languages'),
         value: computed(() => navigator.languages.join(', ')),
       },
       {
-        label: 'Platform',
+        label: t('toolContent.device.platform'),
         value: computed(() => navigator.platform),
       },
       {
-        label: 'User agent',
+        label: t('toolContent.device.userAgent'),
         value: computed(() => navigator.userAgent),
       },
     ],
   },
-];
+]);
 </script>
 
 <template>
@@ -70,7 +71,7 @@ const sections = [
             {{ value }}
           </n-ellipsis>
           <div v-else class="undefined-value">
-            unknown
+            {{ $t('toolContent.device.unknown') }}
           </div>
         </div>
       </n-gi>

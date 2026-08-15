@@ -41,6 +41,7 @@ const keys = useMagicKeys();
 const value = useVModel(props, 'value', emits);
 const theme = useTheme();
 const appTheme = useAppTheme();
+const { t } = useI18n();
 
 const isOpen = ref(false);
 const selectedOption = shallowRef<CSelectOption<T> | undefined>(options.value.find((option: CSelectOption<T>) => option.value === value.value));
@@ -151,12 +152,12 @@ function onSearchInput() {
       >
         <div flex-1 truncate>
           <slot name="displayed-value">
-            <input v-if="searchable && isOpen" ref="searchInputRef" v-model="searchQuery" type="text" placeholder="Search..." class="search-input" w-full lh-normal color-current @input="onSearchInput">
+            <input v-if="searchable && isOpen" ref="searchInputRef" v-model="searchQuery" type="text" :placeholder="t('common.search')" class="search-input" w-full color-current lh-normal @input="onSearchInput">
             <span v-else-if="selectedOption" lh-normal>
               {{ selectedOption.label }}
             </span>
             <span v-else class="placeholder" lh-normal>
-              {{ placeholder ?? 'Select an option' }}
+              {{ placeholder ?? t('common.selectOption') }}
             </span>
           </slot>
         </div>
@@ -169,7 +170,7 @@ function onSearchInput() {
           <template v-if="!filteredOptions.length">
             <slot name="empty">
               <div px-4 py-1 opacity-70>
-                No results found
+                {{ t('common.noResults') }}
               </div>
             </slot>
           </template>

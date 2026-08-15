@@ -1,3 +1,58 @@
+common:
+  copied: Copied!
+  copyToClipboard: Copy to clipboard
+  copiedToClipboard: Copied to the clipboard
+  yes: Yes
+  no: No
+  notAvailable: N/A
+  dataTable: Data table
+  sortKeys: 'Sort keys:'
+  indentSize: 'Indent size:'
+  invalidJson: Provided JSON is not valid.
+  invalidToml: Provided TOML is not valid.
+  invalidXml: Provided XML is not valid.
+  invalidYaml: Provided YAML is not valid.
+  rawJson: Your raw JSON
+  rawYaml: Your raw YAML
+  pasteRawJson: Paste your raw JSON here...
+  pasteRawYaml: Paste your raw YAML here...
+  yourJson: Your JSON
+  yourJsonContent: Your JSON content
+  yourToml: Your TOML
+  yourXml: Your XML
+  yourXmlContent: Your XML content
+  yourYaml: Your YAML
+  pasteJson: Paste your JSON here...
+  pasteJsonContent: Paste your JSON content here...
+  pasteToml: Paste your TOML here...
+  pasteXml: Paste your XML here...
+  pasteXmlContent: Paste your XML content here...
+  pasteYaml: Paste your YAML here...
+  minifiedJson: Minified version of your JSON
+  prettifiedJson: Prettified version of your JSON
+  prettifiedYaml: Prettified version of your YAML
+  csvFromJson: CSV version of your JSON
+  tomlFromJson: TOML from your JSON
+  convertedXml: Converted XML
+  yamlFromJson: YAML from your JSON
+  jsonFromToml: JSON from your TOML
+  yamlFromToml: YAML from your TOML
+  convertedJson: Converted JSON
+  jsonFromYaml: JSON from your YAML
+  tomlFromYaml: TOML from your YAML
+  search: Search...
+  selectOption: Select an option
+  noResults: No results found
+  fileUpload: Drag and drop files here, or click to select files
+  or: or
+  browseFiles: Browse files
+  inputText: Input text
+  input: Input
+  inputPlaceholder: Input...
+  output: Output
+  copy: Copy
+  commandSearch: Type to search a tool or a command...
+
 home:
   categories:
     newestTools: Newest tools
@@ -119,6 +174,19 @@ tools:
   sql-prettify:
     title: SQL prettify and format
     description: Format and prettify your SQL queries online (it supports various SQL dialects).
+    content:
+      dialect: Dialect
+      keywordCase: Keyword case
+      indentStyle: Indent style
+      uppercase: UPPERCASE
+      lowercase: lowercase
+      preserve: Preserve
+      standard: Standard
+      tabularLeft: Tabular left
+      tabularRight: Tabular right
+      inputLabel: Your SQL query
+      inputPlaceholder: Put your SQL query here...
+      outputLabel: Prettified version of your query
 
   benchmark-builder:
     title: Benchmark builder
@@ -167,10 +235,47 @@ tools:
   list-converter:
     title: List converter
     description: This tool can process column-based data and apply various changes (transpose, add prefix and suffix, reverse list, sort list, lowercase values, truncate values) to each row.
+    content:
+      sortAscending: Sort ascending
+      sortDescending: Sort descending
+      trimItems: Trim list items
+      removeDuplicates: Remove duplicates
+      lowercase: Convert to lowercase
+      keepLineBreaks: Keep line breaks
+      sortList: Sort list
+      sortPlaceholder: Sort alphabetically
+      separator: Separator
+      wrapItem: Wrap item
+      itemPrefix: Item prefix
+      itemSuffix: Item suffix
+      wrapList: Wrap list
+      listPrefix: List prefix
+      listSuffix: List suffix
+      inputLabel: Your input data
+      inputPlaceholder: Paste your input data here...
+      outputLabel: Your transformed data
 
   base64-string-converter:
     title: Base64 string encoder/decoder
     description: Simply encode and decode strings into their base64 representation.
+    content:
+      encodeTitle: String to base64
+      encodeUrlSafe: Encode URL safe
+      stringToEncode: String to encode
+      stringPlaceholder: Put your string here...
+      base64OfString: Base64 of string
+      base64OutputPlaceholder: The base64 encoding of your string will be here
+      copyBase64: Copy base64
+      decodeTitle: Base64 to string
+      decodeUrlSafe: Decode URL safe
+      base64ToDecode: Base64 string to decode
+      base64Placeholder: Your base64 string...
+      decodedString: Decoded string
+      decodedOutputPlaceholder: The decoded string will be here
+      copyDecoded: Copy decoded string
+      invalidBase64: Invalid base64 string
+      base64Copied: Base64 string copied to the clipboard
+      stringCopied: String copied to the clipboard
 
   toml-to-yaml:
     title: TOML to YAML
@@ -243,6 +348,9 @@ tools:
   xml-formatter:
     title: XML formatter
     description: Prettify your XML string into a friendly, human-readable format.
+    content:
+      collapseContent: 'Collapse content:'
+      outputLabel: Formatted XML from your XML
 
   temperature-converter:
     title: Temperature converter
@@ -316,6 +424,26 @@ tools:
     title: JSON minify
     description: Minify and compress your JSON by removing unnecessary whitespace.
 
+  jsonpath-extractor:
+    title: JSONPath extractor
+    description: Query JSON with JSONPath and extract matching nodes in bulk.
+    pathLabel: JSONPath expression
+    pathPlaceholder: 'For example: $.data[*].a'
+    examplesLabel: 'Examples:'
+    examples:
+      basic: Basic array
+      filter: Conditional filter
+      recursive: Recursive extraction
+    inputLabel: JSON input
+    inputPlaceholder: Paste your JSON here...
+    outputLabel: 'Extraction result ({count} matches)'
+    copyResult: Copy extraction result
+    errors:
+      empty_json: Enter JSON input.
+      invalid_json: Invalid JSON format.
+      empty_path: Enter a JSONPath expression.
+      invalid_path: Invalid JSONPath expression.
+
   ulid-generator:
     title: ULID generator
     description: Generate random Universally Unique Lexicographically Sortable Identifier (ULID).
@@ -375,3 +503,755 @@ tools:
   text-to-binary:
     title: Text to ASCII binary
     description: Convert text to its ASCII binary representation and vice-versa.
+
+  ascii-text-drawer:
+    title: ASCII Art Text Generator
+    description: Create ASCII art text with many fonts and styles.
+
+  email-normalizer:
+    title: Email normalizer
+    description: Normalize email addresses to a standard format for easier comparison. Useful for deduplication and data cleaning.
+
+  json-to-xml:
+    title: JSON to XML
+    description: Convert JSON to XML.
+
+  xml-to-json:
+    title: XML to JSON
+    description: Convert XML to JSON.
+
+  markdown-to-html:
+    title: Markdown to HTML
+    description: Convert Markdown to HTML and allow printing as PDF.
+
+  regex-tester:
+    title: Regex Tester
+    description: Test your regular expressions with sample text.
+
+  regex-memo:
+    title: Regex cheatsheet
+    description: JavaScript Regex/Regular Expression cheatsheet.
+
+  safelink-decoder:
+    title: Outlook SafeLink decoder
+    description: Decode Outlook SafeLink links.
+
+toolContent:
+  basicAuth:
+    username: Username
+    usernamePlaceholder: Your username...
+    password: Password
+    passwordPlaceholder: Your password...
+    header: 'Authorization header:'
+    copyHeader: Copy header
+    headerCopied: Header copied to the clipboard
+  hashText:
+    inputLabel: 'Your text to hash:'
+    placeholder: Your string to hash...
+    encoding: Digest encoding
+    binary: Binary (base 2)
+    hexadecimal: Hexadecimal (base 16)
+    base64Url: Base64url (base 64 with url safe chars)
+  jwt:
+    inputLabel: JWT to decode
+    placeholder: Put your token here...
+    header: Header
+    payload: Payload
+    invalid: Invalid JWT
+  markdown:
+    placeholder: Your Markdown content...
+    inputLabel: 'Your Markdown to convert:'
+    outputLabel: 'Output HTML:'
+    printPdf: Print as PDF
+  math:
+    placeholder: 'Your math expression (ex: 2*sqrt(6) )...'
+    result: Result
+  emailNormalizer:
+    inputLabel: 'Raw emails to normalize:'
+    placeholder: Put your emails here (one per line)...
+    outputLabel: 'Normalized emails:'
+    outputPlaceholder: Normalized emails will appear here...
+    clear: Clear emails
+    copy: Copy normalized emails
+    copied: Normalized emails copied to the clipboard
+    parseError: 'Unable to parse email: {email}'
+  emoji:
+    searchPlaceholder: "Search emojis (e.g. 'smile')..."
+    noResults: No results
+    searchResults: Search results
+  httpStatus:
+    placeholder: Search http status...
+    searchResults: Search results
+    forProtocol: For {type}.
+  keycode:
+    key: 'Key:'
+    keyPlaceholder: Key name...
+    keycode: 'Keycode:'
+    code: 'Code:'
+    location: 'Location:'
+    modifiers: 'Modifiers:'
+    none: None
+    instruction: Press the key on your keyboard you want to get info about this key
+  numeronym:
+    inputPlaceholder: "Enter a word, e.g. 'internationalization'"
+    outputPlaceholder: "Your numeronym will be here, e.g. 'i18n'"
+  qr:
+    text: 'Text:'
+    placeholder: Your link or text...
+    foreground: 'Foreground color:'
+    background: 'Background color:'
+    errorResistance: 'Error resistance:'
+    download: Download qr-code
+  rsa:
+    bits: 'Bits:'
+    invalidBits: Bits should be 256 <= bits <= 16384 and be a multiple of 8
+    refresh: Refresh key-pair
+    publicKey: Public key
+    privateKey: Private key
+  safelink:
+    inputLabel: 'Your input Outlook SafeLink URL:'
+    placeholder: Your input Outlook SafeLink URL...
+    outputLabel: 'Output decoded URL:'
+    invalid: Invalid SafeLink URL
+  slug:
+    inputLabel: Your string to slugify
+    inputPlaceholder: 'Put your string here (ex: My file path)'
+    outputLabel: Your slug
+    outputPlaceholder: 'Your slug will be generated here (ex: my-file-path)'
+    copy: Copy slug
+    copied: Slug copied to clipboard
+  obfuscator:
+    inputLabel: 'String to obfuscate:'
+    placeholder: Enter string to obfuscate
+    keepFirst: 'Keep first:'
+    keepLast: 'Keep last:'
+    keepSpaces: 'Keep spaces:'
+  textStatistics:
+    placeholder: Your text...
+    characters: Character count
+    words: Word count
+    lines: Line count
+    bytes: Byte size
+  nato:
+    inputLabel: Your text to convert to NATO phonetic alphabet
+    placeholder: Put your text here...
+    outputLabel: Your text in NATO phonetic alphabet
+    copy: Copy NATO string
+    copied: NATO alphabet string copied.
+  urlParser:
+    inputLabel: 'Your URL to parse:'
+    placeholder: Your URL to parse...
+    invalid: Invalid URL
+    protocol: Protocol
+    username: Username
+    password: Password
+    hostname: Hostname
+    port: Port
+    path: Path
+    params: Params
+  userAgent:
+    inputLabel: User agent string
+    placeholder: Put your user-agent here...
+    browser: Browser
+    engine: Engine
+    os: OS
+    device: Device
+    name: Name
+    version: Version
+    model: Model
+    type: Type
+    vendor: Vendor
+    architecture: Architecture
+    noBrowserName: No browser name available
+    noBrowserVersion: No browser version available
+    noEngineName: No engine name available
+    noEngineVersion: No engine version available
+    noOsName: No OS name available
+    noOsVersion: No OS version available
+    noDeviceModel: No device model available
+    noDeviceType: No device type available
+    noDeviceVendor: No device vendor available
+    noCpuArchitecture: No CPU architecture available
+  roman:
+    arabicToRoman: Arabic to roman
+    romanToArabic: Roman to arabic
+    copy: Copy
+    rangeError: We can only convert numbers between {min} and {max}
+    invalidRoman: The input you entered is not a valid roman number
+    romanCopied: Roman number copied to the clipboard
+    arabicCopied: Arabic number copied to the clipboard
+  otp:
+    previous: Previous
+    current: Current OTP
+    next: Next
+    copyPrevious: Copy previous OTP
+    copyCurrent: Copy current OTP
+    copyNext: Copy next OTP
+    secret: Secret
+    secretPlaceholder: Paste your TOTP secret...
+    generateSecret: Generate a new random secret
+    secretBase32: Secret should be a base32 string
+    secretRequired: Please set a secret
+    nextIn: Next in {seconds}s
+    openKeyUri: Open Key URI in new tab
+    secretHex: Secret in hexadecimal
+    secretHexPlaceholder: Secret in hex will be displayed here
+    epochPlaceholder: Epoch in sec will be displayed here
+    iteration: Iteration
+    count: 'Count:'
+    countPlaceholder: Iteration count will be displayed here
+    hexCountPlaceholder: Iteration count in hex will be displayed here
+    paddedHex: 'Padded hex:'
+  encryption:
+    encrypt: Encrypt
+    decrypt: Decrypt
+    plainText: 'Your text:'
+    plainPlaceholder: The string to encrypt
+    secret: 'Your secret key:'
+    algorithm: 'Encryption algorithm:'
+    encryptedOutput: 'Your text encrypted:'
+    encryptedInput: 'Your encrypted text:'
+    encryptedPlaceholder: The string to decrypt
+    decryptedOutput: 'Your decrypted text:'
+    outputPlaceholder: Your result
+    errorTitle: Error while decrypting
+    decryptError: Unable to decrypt your text
+  bcrypt:
+    hash: Hash
+    placeholder: Your string to bcrypt...
+    inputLabel: 'Your string:'
+    saltCount: 'Salt count:'
+    saltPlaceholder: Salt rounds...
+    copyHash: Copy hash
+    copied: Hashed string copied to the clipboard
+    compareTitle: Compare string with hash
+    compareStringPlaceholder: Your string to compare...
+    hashLabel: 'Your hash:'
+    compareHashPlaceholder: Your hash to compare...
+    matches: 'Do they match?'
+    yes: Yes
+    no: No
+  hmac:
+    textLabel: Plain text to compute the hash
+    textPlaceholder: Plain text to compute the hash...
+    secretLabel: Secret key
+    secretPlaceholder: Enter the secret key...
+    hashFunction: Hashing function
+    hashPlaceholder: Select a hashing function...
+    outputEncoding: Output encoding
+    encodingPlaceholder: Select the result encoding...
+    outputLabel: HMAC of your text
+    outputPlaceholder: The result of the HMAC...
+    copy: Copy HMAC
+  htmlEntities:
+    escapeTitle: Escape HTML entities
+    inputLabel: 'Your string:'
+    escapePlaceholder: The string to escape
+    escapedLabel: 'Your string escaped:'
+    escapedPlaceholder: Your string escaped
+    unescapeTitle: Unescape HTML entities
+    escapedInputLabel: 'Your escaped string:'
+    unescapePlaceholder: The string to unescape
+    unescapedLabel: 'Your string unescaped:'
+    unescapedPlaceholder: Your string unescaped
+    copy: Copy
+  binary:
+    textToBinary: Text to ASCII binary
+    binaryToText: ASCII binary to text
+    textPlaceholder: "e.g. 'Hello world'"
+    textInputLabel: Enter text to convert to binary
+    binaryOutputLabel: Binary from your text
+    binaryOutputPlaceholder: The binary representation of your text will be here
+    copyBinary: Copy binary to clipboard
+    binaryPlaceholder: "e.g. '01001000 01100101 01101100 01101100 01101111'"
+    binaryInputLabel: Enter binary to convert to text
+    textOutputLabel: Text from your binary
+    textOutputPlaceholder: The text representation of your binary will be here
+    copyText: Copy text to clipboard
+    invalid: Binary should be a valid ASCII binary string with multiples of 8 bits
+  unicode:
+    textToUnicode: Text to Unicode
+    unicodeToText: Unicode to Text
+    textPlaceholder: "e.g. 'Hello Avengers'"
+    textInputLabel: Enter text to convert to unicode
+    unicodeOutputLabel: Unicode from your text
+    unicodeOutputPlaceholder: The unicode representation of your text will be here
+    copyUnicode: Copy unicode to clipboard
+    unicodePlaceholder: Input Unicode
+    unicodeInputLabel: Enter unicode to convert to text
+    textOutputLabel: Text from your Unicode
+    textOutputPlaceholder: The text representation of your unicode will be here
+    copyText: Copy text to clipboard
+  urlEncoder:
+    encode: Encode
+    decode: Decode
+    inputLabel: 'Your string:'
+    encodePlaceholder: The string to encode
+    encodedLabel: 'Your string encoded:'
+    encodedPlaceholder: Your string encoded
+    encodedInputLabel: 'Your encoded string:'
+    decodePlaceholder: The string to decode
+    decodedLabel: 'Your string decoded:'
+    decodedPlaceholder: Your string decoded
+    copy: Copy
+    parseError: Impossible to parse this string
+    encodedCopied: Encoded string copied to the clipboard
+    decodedCopied: Decoded string copied to the clipboard
+  base64File:
+    toFile: Base64 to file
+    toBase64: File to Base64
+    fileName: File Name
+    fileNamePlaceholder: Download filename
+    extension: Extension
+    inputPlaceholder: Put your base64 file string here...
+    invalid: Invalid base 64 string
+    preview: Preview image
+    download: Download file
+    upload: Drag and drop a file here, or click to select a file
+    outputPlaceholder: File in base64 will be here
+    copy: Copy
+    copied: Base64 string copied to the clipboard
+  bip39:
+    language: 'Language:'
+    entropy: 'Entropy (seed):'
+    entropyPlaceholder: Your string...
+    passphrase: 'Passphrase (mnemonic):'
+    mnemonicPlaceholder: Your mnemonic...
+    entropyLength: Entropy length should be >= 16, <= 32 and be a multiple of 4
+    entropyHex: Entropy should be a hexadecimal string
+    invalidMnemonic: Invalid mnemonic
+    entropyCopied: Entropy copied to the clipboard
+    passphraseCopied: Passphrase copied to the clipboard
+    languages:
+      english: English
+      chinese_simplified: Chinese simplified
+      chinese_traditional: Chinese traditional
+      czech: Czech
+      french: French
+      italian: Italian
+      japanese: Japanese
+      korean: Korean
+      portuguese: Portuguese
+      spanish: Spanish
+  wifiQr:
+    encryption: Encryption method
+    noPassword: No password
+    ssidPlaceholder: Your WiFi SSID...
+    hiddenSsid: Hidden SSID
+    password: 'Password:'
+    passwordPlaceholder: Your WiFi Password...
+    eapMethod: EAP method
+    identity: 'Identity:'
+    identityPlaceholder: Your EAP Identity...
+    anonymous: Anonymous?
+    phase2Method: EAP Phase 2 method
+  ipv4:
+    inputLabel: 'The IPv4 address:'
+    placeholder: The IPv4 address...
+    correctPlaceholder: Set a correct IPv4 address
+    invalid: Invalid IPv4 address
+    decimal: 'Decimal:'
+    hexadecimal: 'Hexadecimal:'
+    binary: 'Binary:'
+    ipv6Short: 'IPv6 (short):'
+  ipv4Range:
+    start: Start address
+    end: End address
+    startPlaceholder: Start IPv4 address...
+    endPlaceholder: End IPv4 address...
+    addressCount: Addresses in range
+    oldValue: old value
+    newValue: new value
+    invalidRange: Invalid combination of start and end IPv4 address
+    invalidRangeDescription: The end IPv4 address is lower than the start IPv4 address. This is not valid and no result could be calculated. In most cases, switching the start and end addresses solves the problem.
+    switch: Switch start and end IPv4 address
+  ipv4Subnet:
+    inputLabel: An IPv4 address with or without mask
+    invalid: We cannot parse this address, check the format
+    netmask: Netmask
+    networkAddress: Network address
+    networkMask: Network mask
+    binaryMask: Network mask in binary
+    cidr: CIDR notation
+    wildcard: Wildcard mask
+    size: Network size
+    first: First address
+    last: Last address
+    broadcast: Broadcast address
+    noBroadcast: No broadcast address with this mask
+    ipClass: IP class
+    unknownClass: Unknown class type
+    previous: Previous block
+    next: Next block
+  ipv6Ula:
+    info: Info
+    description: This tool uses the first method suggested by IETF using the current timestamp plus the MAC address, SHA-1 hashed, and the lower 40 bits to generate your random ULA.
+    firstBlock: 'First routable block:'
+    lastBlock: 'Last routable block:'
+  mac:
+    inputLabel: 'MAC address:'
+    placeholder: Type a MAC address
+    invalid: Invalid MAC address
+    invalidPartial: Invalid partial MAC address
+    quantity: 'Quantity:'
+    prefix: 'MAC address prefix:'
+    prefixPlaceholder: Set a prefix, e.g. 64:16:7F
+    uppercase: Uppercase
+    lowercase: Lowercase
+    none: None
+    case: 'Case:'
+    separator: 'Separator:'
+    refresh: Refresh
+    copy: Copy
+    addressesCopied: MAC addresses copied to the clipboard
+    vendorInfo: 'Vendor info:'
+    unknownVendor: Unknown vendor for this address
+    copyVendor: Copy vendor info
+    vendorCopied: Vendor info copied to the clipboard
+  phone:
+    defaultCountry: 'Default country code:'
+    inputLabel: 'Phone number:'
+    placeholder: Enter a phone number
+    invalid: Invalid phone number
+    unknown: Unknown
+    countryCode: Country code
+    country: Country
+    callingCode: Country calling code
+    isValid: Is valid?
+    isPossible: Is possible?
+    yes: Yes
+    no: No
+    type: Type
+    international: International format
+    national: National format
+    types:
+      MOBILE: Mobile
+      FIXED_LINE: Fixed line
+      FIXED_LINE_OR_MOBILE: Fixed line or mobile
+      PERSONAL_NUMBER: Personal number
+      PREMIUM_RATE: Premium rate
+      SHARED_COST: Shared cost
+      TOLL_FREE: Toll free
+      UAN: Universal access number
+      VOICEMAIL: Voicemail
+      VOIP: VoIP
+      PAGER: Pager
+  mime:
+    mimeToExtension: MIME type to extension
+    mimeToExtensionDescription: Know which file extensions are associated with a MIME type
+    mimePlaceholder: 'Select your MIME type here... (ex: application/pdf)'
+    extensionsFor: Extensions of files with the
+    mimeTypeSuffix: 'MIME type:'
+    extensionToMime: File extension to MIME type
+    extensionToMimeDescription: Know which MIME type is associated with a file extension
+    extensionPlaceholder: 'Select your file extension here... (ex: .pdf)'
+    mimeForExtension: MIME type associated with the extension
+    extensionSuffix: 'file extension:'
+    mimeTypes: MIME types
+    extensions: Extensions
+  device:
+    screen: Screen
+    device: Device
+    screenSize: Screen size
+    orientation: Orientation
+    orientationAngle: Orientation angle
+    colorDepth: Color depth
+    pixelRatio: Pixel ratio
+    windowSize: Window size
+    browserVendor: Browser vendor
+    languages: Languages
+    platform: Platform
+    userAgent: User agent
+    unknown: unknown
+  iban:
+    placeholder: Enter an IBAN to check for validity...
+    isValid: Is IBAN valid?
+    errorsLabel: IBAN errors
+    isQrIban: Is IBAN a QR-IBAN?
+    countryCode: Country code
+    friendlyFormat: IBAN friendly format
+    examples: Valid IBAN examples
+    errors:
+      noIban: No IBAN provided
+      noCountry: No IBAN country
+      wrongBbanLength: Wrong BBAN length
+      wrongBbanFormat: Wrong BBAN format
+      checksumNotNumber: Checksum is not a number
+      wrongIbanChecksum: Wrong IBAN checksum
+      wrongBranchChecksum: Wrong account bank branch checksum
+      qrNotAllowed: QR-IBAN not allowed
+  baseConverter:
+    inputNumber: Input number
+    inputPlaceholder: 'Put your number here (ex: 42)'
+    inputBase: Input base
+    basePlaceholder: 'Put your input base here (ex: 10)'
+    binary: Binary (2)
+    octal: Octal (8)
+    decimal: Decimal (10)
+    hexadecimal: Hexadecimal (16)
+    custom: 'Custom:'
+    resultPlaceholder: 'Base {base} will be here...'
+    invalidDigit: 'Invalid digit "{digit}" for base {base}.'
+    invalidNumber: Unable to convert this number.
+  percentage:
+    whatIs: What is
+    percentOf: '% of'
+    xPercentOfY: X is what percent of Y
+    isPercentOf: is what percent of
+    change: What is the percentage increase/decrease
+    from: From
+    to: To
+    result: Result
+  eta:
+    example: With a concrete example, if you wash 5 plates in 3 minutes and you have 500 plates to wash, it will take you 5 hours to wash them all.
+    amount: Amount of elements to consume
+    startedAt: The consumption started at
+    rate: Amount of units consumed by time span
+    in: in
+    milliseconds: milliseconds
+    seconds: seconds
+    minutes: minutes
+    hours: hours
+    days: days
+    duration: Total duration
+    endsAt: It will end
+  lorem:
+    paragraphs: Paragraphs
+    sentences: Sentences per paragraph
+    words: Words per sentence
+    startWith: Start with lorem ipsum?
+    asHtml: As HTML?
+    placeholder: Your lorem ipsum...
+    copy: Copy
+    refresh: Refresh
+    copied: Lorem ipsum copied to the clipboard
+  uuid:
+    version: UUID version
+    quantity: Quantity
+    quantityPlaceholder: UUID quantity
+    namespace: Namespace
+    name: Name
+    outputPlaceholder: Your UUIDs
+    copy: Copy
+    refresh: Refresh
+    copied: UUIDs copied to the clipboard
+    invalid: Invalid UUID
+  ulid:
+    quantity: 'Quantity:'
+    format: 'Format:'
+    refresh: Refresh
+    copy: Copy
+    copied: ULIDs copied to the clipboard
+    raw: Raw
+  chmod:
+    read: Read (4)
+    write: Write (2)
+    execute: Execute (1)
+    owner: Owner (u)
+    group: Group (g)
+    public: Public (o)
+  dateTime:
+    placeholder: Put your date string here...
+    invalidPlaceholder: Invalid date...
+    invalid: This date is invalid for this format
+    jsLocale: JS locale date string
+    unixTimestamp: Unix timestamp
+    timestamp: Timestamp
+    utcFormat: UTC format
+    excelDateTime: Excel date/time
+  cron:
+    invalid: This cron is invalid
+    verbose: Verbose
+    use24Hour: Use 24 hour time format
+    daysStartAtZero: Days start at 0
+    anyValue: Any value
+    everyMinute: Every minute
+    range: Range of values
+    minutesRange: Minutes 1 through 10
+    list: List of values
+    atMinutes: At minutes 1 and 10
+    step: Step values
+    everyTenMinutes: Every 10 minutes
+    yearly: Once every year at midnight of 1 January
+    sameAsYearly: "Same as {'@'}yearly"
+    monthly: Once a month at midnight on the first day
+    weekly: Once a week at midnight on Sunday morning
+    daily: Once a day at midnight
+    sameAsDaily: "Same as {'@'}daily"
+    hourly: Once an hour at the beginning of the hour
+    reboot: Run at startup
+    symbol: 'Symbol:'
+    meaning: 'Meaning:'
+    example: 'Example:'
+    equivalent: 'Equivalent:'
+    diagram: |
+      ┌──────────── [optional] seconds (0 - 59)
+      │ ┌────────── minute (0 - 59)
+      │ │ ┌──────── hour (0 - 23)
+      │ │ │ ┌────── day of month (1 - 31)
+      │ │ │ │ ┌──── month (1 - 12) OR jan,feb,mar,apr ...
+      │ │ │ │ │ ┌── day of week (0 - 6, sunday=0) OR sun,mon ...
+      │ │ │ │ │ │
+      * * * * * * command
+  caseConverter:
+    inputLabel: 'Your string:'
+    placeholder: Your string...
+  regex:
+    inputLabel: 'Regex to test:'
+    placeholder: Put the regex to test
+    invalid: 'Invalid regex: {0}'
+    cheatsheet: See Regular Expression Cheatsheet
+    global: Global search
+    ignoreCase: Case-insensitive search
+    multiline: Multiline
+    multilineHelp: Allows ^ and $ to match next to newline characters.
+    singleline: Singleline
+    singlelineHelp: Allows . to match newline characters.
+    unicodeHelp: Unicode; treat a pattern as a sequence of Unicode code points.
+    unicodeSetsHelp: An upgrade to the u mode with more Unicode features.
+    textLabel: 'Text to match:'
+    textPlaceholder: Put the text to match
+    matches: Matches
+    index: Index in text
+    value: Value
+    captures: Captures
+    groups: Groups
+    noMatch: No match
+    sample: Sample matching text
+    diagram: Regex Diagram
+  svg:
+    width: Width (in px)
+    widthPlaceholder: SVG width...
+    background: Background
+    height: Height (in px)
+    heightPlaceholder: SVG height...
+    textColor: Text color
+    fontSize: Font size
+    fontSizePlaceholder: Font size...
+    customText: Custom text
+    defaultText: Default is {width}x{height}
+    exactSize: Use exact size
+    htmlElement: SVG HTML element
+    base64: SVG in Base64
+    copySvg: Copy SVG
+    copyBase64: Copy base64
+    download: Download SVG
+    preview: SVG preview
+  ascii:
+    inputLabel: 'Your text:'
+    placeholder: Your text to draw
+    font: 'Font:'
+    fontPlaceholder: Select font to use
+    width: 'Width:'
+    widthPlaceholder: Width of the text
+    loading: Loading font...
+    error: Current settings resulted in error.
+    outputLabel: 'ASCII Art text:'
+  docker:
+    inputLabel: 'Your docker run command:'
+    placeholder: Your docker run command to convert...
+    download: Download docker-compose.yml
+    notTranslatable: These options are not translatable to docker-compose
+    notImplemented: These options are not yet implemented and therefore have not been translated to docker-compose
+    errors: The following errors occurred
+  jsonDiff:
+    first: Your first JSON
+    firstPlaceholder: Paste your first JSON here...
+    second: Your JSON to compare
+    secondPlaceholder: Paste your JSON to compare here...
+    onlyDifferences: Only show differences
+    same: The provided JSONs are the same
+  password:
+    placeholder: Enter a password...
+    duration: Duration to crack this password with brute force
+    length: 'Password length:'
+    entropy: 'Entropy:'
+    charset: 'Character set size:'
+    score: 'Score:'
+    note: 'Note:'
+    noteDescription: The computed strength is based on the time it would take to crack the password using a brute force approach; it does not take into account the possibility of a dictionary attack.
+  pdf:
+    upload: Drag and drop a PDF file here, or click to select a file
+    noSignatures: No signatures found in the provided file.
+    signatureCertificates: 'Signature {index} certificates:'
+    validityPeriod: Validity period
+    issuedBy: Issued by
+    issuedTo: Issued to
+    pemCertificate: PEM certificate
+    certificate: Certificate {index}
+    notBefore: Not before
+    notAfter: Not after
+    commonName: Common name
+    organizationName: Organization name
+    countryName: Country name
+    localityName: Locality name
+    organizationalUnitName: Organizational unit name
+    stateName: State or province name
+    viewPem: View PEM cert
+  meta:
+    outputLabel: Your meta tags
+  camera:
+    unsupported: Your browser does not support recording video from camera
+    permissionRequired: You need to grant permission to use your camera and microphone
+    permissionBlocked: Your browser has blocked permission request or does not support it. You need to grant permission manually in your browser settings (usually the lock icon in the address bar).
+    grantPermission: Grant permission
+    video: 'Video:'
+    selectCamera: Select camera
+    audio: 'Audio:'
+    selectMicrophone: Select microphone
+    startWebcam: Start webcam
+    takeScreenshot: Take screenshot
+    startRecording: Start recording
+    pause: Pause
+    resume: Resume
+    stop: Stop
+    recordingUnsupported: Video recording is not supported in your browser
+    screenshot: Screenshot
+    videoName: Video
+  benchmark:
+    suiteNumber: Suite {number}
+    position: Position
+    suite: Suite
+    samples: Samples
+    mean: Mean
+    variance: Variance
+    suiteName: Suite name
+    suiteNamePlaceholder: Suite name...
+    suiteValues: Suite values
+    deleteSuite: Delete suite
+    addSuite: Add suite
+    unit: Unit
+    unitPlaceholder: 'Unit (eg: ms)'
+    reset: Reset suites
+    copyMarkdown: Copy as markdown table
+    copyList: Copy as bullet list
+    measurePlaceholder: Set your measure...
+    deleteValue: Delete this value
+    addMeasure: Add a measure
+  chronometer:
+    start: Start
+    stop: Stop
+    reset: Reset
+  randomPort:
+    copy: Copy
+    refresh: Refresh
+    copied: Port copied to the clipboard
+  htmlEditor:
+    bold: Bold
+    italic: Italic
+    strike: Strike
+    inlineCode: Inline code
+    heading: Heading {level}
+    bulletList: Bullet list
+    orderedList: Ordered list
+    codeBlock: Code block
+    blockquote: Blockquote
+    hardBreak: Hard break
+    clearFormat: Clear format
+    undo: Undo
+    redo: Redo
+  color:
+    picker: Color picker
+    name: Name
+    example: 'e.g. {value}'
+    invalid: 'Invalid {format} format.'

@@ -8,7 +8,8 @@ const themeVars = useThemeVars();
 const input = ref('');
 const saltCount = ref(10);
 const hashed = computed(() => hashSync(input.value, saltCount.value));
-const { copy } = useCopy({ source: hashed, text: 'Hashed string copied to the clipboard' });
+const { t } = useI18n();
+const { copy } = useCopy({ source: hashed, text: () => t('toolContent.bcrypt.copied') });
 
 const compareString = ref('');
 const compareHash = ref('');
@@ -16,41 +17,41 @@ const compareMatch = computed(() => compareSync(compareString.value, compareHash
 </script>
 
 <template>
-  <c-card title="Hash">
+  <c-card :title="$t('toolContent.bcrypt.hash')">
     <c-input-text
       v-model:value="input"
-      placeholder="Your string to bcrypt..."
+      :placeholder="$t('toolContent.bcrypt.placeholder')"
       raw-text
-      label="Your string: "
+      :label="$t('toolContent.bcrypt.inputLabel')"
       label-position="left"
       label-align="right"
       label-width="120px"
       mb-2
     />
-    <n-form-item label="Salt count: " label-placement="left" label-width="120">
-      <n-input-number v-model:value="saltCount" placeholder="Salt rounds..." :max="100" :min="0" w-full />
+    <n-form-item :label="$t('toolContent.bcrypt.saltCount')" label-placement="left" label-width="120">
+      <n-input-number v-model:value="saltCount" :placeholder="$t('toolContent.bcrypt.saltPlaceholder')" :max="100" :min="0" w-full />
     </n-form-item>
 
     <c-input-text :value="hashed" readonly text-center />
 
     <div mt-5 flex justify-center>
       <c-button @click="copy()">
-        Copy hash
+        {{ $t('toolContent.bcrypt.copyHash') }}
       </c-button>
     </div>
   </c-card>
 
-  <c-card title="Compare string with hash">
+  <c-card :title="$t('toolContent.bcrypt.compareTitle')">
     <n-form label-width="120">
-      <n-form-item label="Your string: " label-placement="left">
-        <c-input-text v-model:value="compareString" placeholder="Your string to compare..." raw-text />
+      <n-form-item :label="$t('toolContent.bcrypt.inputLabel')" label-placement="left">
+        <c-input-text v-model:value="compareString" :placeholder="$t('toolContent.bcrypt.compareStringPlaceholder')" raw-text />
       </n-form-item>
-      <n-form-item label="Your hash: " label-placement="left">
-        <c-input-text v-model:value="compareHash" placeholder="Your hash to compare..." raw-text />
+      <n-form-item :label="$t('toolContent.bcrypt.hashLabel')" label-placement="left">
+        <c-input-text v-model:value="compareHash" :placeholder="$t('toolContent.bcrypt.compareHashPlaceholder')" raw-text />
       </n-form-item>
-      <n-form-item label="Do they match ? " label-placement="left" :show-feedback="false">
+      <n-form-item :label="$t('toolContent.bcrypt.matches')" label-placement="left" :show-feedback="false">
         <div class="compare-result" :class="{ positive: compareMatch }">
-          {{ compareMatch ? 'Yes' : 'No' }}
+          {{ compareMatch ? $t('toolContent.bcrypt.yes') : $t('toolContent.bcrypt.no') }}
         </div>
       </n-form-item>
     </n-form>

@@ -32,23 +32,23 @@ const { download } = useDownloadFileFromBase64({ source: qrcode, filename: 'qr-c
           label-position="left"
           label-width="130px"
           label-align="right"
-          label="Text:"
+          :label="$t('toolContent.qr.text')"
           multiline
           rows="1"
           autosize
-          placeholder="Your link or text..."
+          :placeholder="$t('toolContent.qr.placeholder')"
           mb-6
         />
         <n-form label-width="130" label-placement="left">
-          <n-form-item label="Foreground color:">
+          <n-form-item :label="$t('toolContent.qr.foreground')">
             <n-color-picker v-model:value="foreground" :modes="['hex']" />
           </n-form-item>
-          <n-form-item label="Background color:">
+          <n-form-item :label="$t('toolContent.qr.background')">
             <n-color-picker v-model:value="background" :modes="['hex']" />
           </n-form-item>
           <c-select
             v-model:value="errorCorrectionLevel"
-            label="Error resistance:"
+            :label="$t('toolContent.qr.errorResistance')"
             label-position="left"
             label-width="130px"
             label-align="right"
@@ -60,7 +60,7 @@ const { download } = useDownloadFileFromBase64({ source: qrcode, filename: 'qr-c
         <div flex flex-col items-center gap-3>
           <n-image :src="qrcode" width="200" />
           <c-button @click="download">
-            Download qr-code
+            {{ $t('toolContent.qr.download') }}
           </c-button>
         </div>
       </n-gi>
