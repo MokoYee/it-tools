@@ -83,64 +83,81 @@ function loadExample(example: JsonPathExample) {
 </script>
 
 <template>
-  <n-form-item
-    :label="t('tools.jsonpath-extractor.pathLabel')"
-    :feedback="pathError"
-    :validation-status="pathError ? 'error' : undefined"
-  >
-    <c-input-text
-      v-model:value="jsonPath"
-      :placeholder="t('tools.jsonpath-extractor.pathPlaceholder')"
-      test-id="jsonpath-input"
-      raw-text
-      monospace
-      clearable
-      autofocus
-    />
-  </n-form-item>
-
-  <div mb-4 flex flex-wrap items-center gap-2>
-    <span text-sm op-70>{{ t('tools.jsonpath-extractor.examplesLabel') }}</span>
-    <c-button
-      v-for="example in examples"
-      :key="example.key"
-      size="small"
-      :data-test-id="`example-${example.key}`"
-      @click="loadExample(example)"
-    >
-      {{ t(`tools.jsonpath-extractor.examples.${example.key}`) }}
-    </c-button>
-  </div>
-
-  <n-grid cols="1 900:2" x-gap="16" y-gap="16">
-    <n-gi>
+  <div class="jsonpath-extractor">
+    <div class="query-controls">
       <n-form-item
-        :label="t('tools.jsonpath-extractor.inputLabel')"
-        :feedback="jsonError"
-        :validation-status="jsonError ? 'error' : undefined"
+        :label="t('tools.jsonpath-extractor.pathLabel')"
+        :feedback="pathError"
+        :validation-status="pathError ? 'error' : undefined"
       >
         <c-input-text
-          ref="jsonInputElement"
-          v-model:value="jsonInput"
-          :placeholder="t('tools.jsonpath-extractor.inputPlaceholder')"
-          rows="20"
-          multiline
+          v-model:value="jsonPath"
+          :placeholder="t('tools.jsonpath-extractor.pathPlaceholder')"
+          test-id="jsonpath-input"
           raw-text
           monospace
-          test-id="json-input"
+          clearable
+          autofocus
         />
       </n-form-item>
-    </n-gi>
 
-    <n-gi>
-      <n-form-item :label="outputLabel">
-        <TextareaCopyable
-          :value="output"
-          language="json"
-          :copy-message="t('tools.jsonpath-extractor.copyResult')"
-          :follow-height-of="jsonInputElement?.inputWrapperRef"
-        />
-      </n-form-item>
-    </n-gi>
-  </n-grid>
+      <div flex flex-wrap items-center gap-2>
+        <span text-sm op-70>{{ t('tools.jsonpath-extractor.examplesLabel') }}</span>
+        <c-button
+          v-for="example in examples"
+          :key="example.key"
+          size="small"
+          :data-test-id="`example-${example.key}`"
+          @click="loadExample(example)"
+        >
+          {{ t(`tools.jsonpath-extractor.examples.${example.key}`) }}
+        </c-button>
+      </div>
+    </div>
+
+    <n-grid cols="1 720:2" x-gap="16" y-gap="16">
+      <n-gi>
+        <n-form-item
+          :label="t('tools.jsonpath-extractor.inputLabel')"
+          :feedback="jsonError"
+          :validation-status="jsonError ? 'error' : undefined"
+        >
+          <c-input-text
+            ref="jsonInputElement"
+            v-model:value="jsonInput"
+            :placeholder="t('tools.jsonpath-extractor.inputPlaceholder')"
+            rows="20"
+            multiline
+            raw-text
+            monospace
+            test-id="json-input"
+          />
+        </n-form-item>
+      </n-gi>
+
+      <n-gi>
+        <n-form-item :label="outputLabel">
+          <TextareaCopyable
+            :value="output"
+            language="json"
+            :copy-message="t('tools.jsonpath-extractor.copyResult')"
+            :follow-height-of="jsonInputElement?.inputWrapperRef"
+          />
+        </n-form-item>
+      </n-gi>
+    </n-grid>
+  </div>
 </template>
+
+<style scoped>
+.jsonpath-extractor {
+  flex: 1 1 1216px !important;
+  min-width: 0;
+  max-width: 1216px;
+}
+
+.query-controls {
+  max-width: 600px;
+  margin: 0 auto 16px;
+}
+</style>
